@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             // Fallback on earlier versions
         }
-        window?.rootViewController = ViewController()
+        window?.rootViewController = GamesListTableViewController()
         
         return true
     }
