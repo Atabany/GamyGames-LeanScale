@@ -92,7 +92,7 @@ extension GameTableCell {
     
     private func setupBottomStackView() {
         bottomStackView.axis = .vertical
-        bottomStackView.distribution = .fillEqually
+        bottomStackView.distribution = .equalCentering
         bottomStackView.alignment = .leading
 
         bottomStackView.spacing = 8
@@ -115,13 +115,7 @@ extension GameTableCell {
         ratingKeyLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
         ratingValueLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
 
-        
     }
-
-
-    
-    
-    
     
     private func style() {
         styleImageView()
@@ -145,18 +139,15 @@ extension GameTableCell {
     
     private func styleRatingKeyLabel() {
         ratingKeyLabel.font      = UIFont(name: "SFProDisplay-Medium", size: 14)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.5
-        ratingKeyLabel.attributedText = NSMutableAttributedString(string: "metacritic:", attributes: [NSAttributedString.Key.kern: 0.38, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        ratingKeyLabel.attributedText = NSMutableAttributedString(string: "metacritic:", attributes: [NSAttributedString.Key.kern: 0.38])
     }
     
     private func styleRatingValueLabel() {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.16
-        ratingValueLabel.textAlignment = .right
-        ratingValueLabel.attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.kern: 0.38, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        ratingValueLabel.attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.kern: 0.38])
         ratingValueLabel.textColor = UIColor(red: 216, green: 0, blue: 0, alpha: 1)
         ratingValueLabel.font    = UIFont(name: "SFProDisplay-Bold", size: 18)
+        
+        
     }
     
     private func styleGenreLabel() {
@@ -208,7 +199,7 @@ extension GameTableCell {
             containerLabelsStackView.leadingAnchor.constraint(equalTo: gameImageView.trailingAnchor, constant: padding),
             containerLabelsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             containerLabelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
-        ])
+         ])
     }
 
     
