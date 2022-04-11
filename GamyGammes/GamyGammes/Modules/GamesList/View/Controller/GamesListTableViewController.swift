@@ -13,7 +13,7 @@ class GamesListTableViewController: UIViewController {
     var  searchController: UISearchController!
 
     var viewModel: GamesListViewModel = GamesListViewModel()
-
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class GamesListTableViewController: UIViewController {
     private func configureVC() {
         view.backgroundColor = AppTheme.shared.gamesBackgroundColor
 //        tableView.backgroundColor = .systemBackground
-        title = "Games"
+        title = viewModel.title
         navigationController?.navigationBar.prefersLargeTitles = true
         configureTableView()
         configureSearchController()

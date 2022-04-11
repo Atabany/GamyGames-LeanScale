@@ -20,8 +20,9 @@ struct GamesListViewModel {
     var reloadTableColsure: (()->())?
     
     
-
-    
+    var title: String {
+        return "Games"
+    }
     
 }
 

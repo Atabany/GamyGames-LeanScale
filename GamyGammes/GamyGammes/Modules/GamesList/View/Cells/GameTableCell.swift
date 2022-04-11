@@ -12,53 +12,202 @@ class GameTableCell: UITableViewCell {
 
     
     static let reuseId = "GameTableCell"
+    static let rowHeight: CGFloat = 112
     
-    let avatarImageView = UIImageView(image: Constants.Images.logo)
+    let padding: CGFloat = 16
+
     
-    let usernameLabel = UILabel()
+    let gameImageView             = UIImageView()
+    let titleLabel                = UILabel()
+    let ratingValueLabel          = UILabel()
+    let ratingKeyLabel            = UILabel()
+    let generLabel                = UILabel()
+    
+    let containerLabelsStackView  = UIStackView()
+    let ratingStackView           = UIStackView()
+    let bottomStackView           = UIStackView()
+    
+    
+    
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configure()
+        setup()
+        layout()
+        self.style()
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     
-    
-
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-        avatarImageView.image = nil
-        avatarImageView.image = Constants.Images.logo
+
     }
     
-    private func configure() {
-        addSubviews(avatarImageView, usernameLabel)
+
+
+    
+}
+
+extension GameTableCell {
+    
+    private func setup() {
+        
         
         accessoryType = .disclosureIndicator
         selectionStyle = .none
-        avatarImageView.contentMode = .scaleAspectFit
-        avatarImageView.clipsToBounds = true
-        let padding: CGFloat = 12
         
-        NSLayoutConstraint.activate([
-            avatarImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 60),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 60),
-            
-            
-            usernameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
-            usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 24),
-            usernameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
-            usernameLabel.heightAnchor.constraint(equalToConstant: 40),
         
-        ])
         
+        [gameImageView,
+        titleLabel,
+        ratingValueLabel,
+        ratingKeyLabel,
+        generLabel,
+        containerLabelsStackView,
+        ratingStackView,
+         bottomStackView].forEach {$0.translatesAutoresizingMaskIntoConstraints = false }
+        
+        
+
+        
+        setupContainerLabelsStackView()
+        setupBottomStackView()
+        setupRatingStackView()
         
     }
+    
+    private func setupContainerLabelsStackView() {
+        containerLabelsStackView.axis = .vertical
+        containerLabelsStackView.distribution = .equalSpacing
+        containerLabelsStackView.alignment = .leading
+        
+        containerLabelsStackView.addArrangedSubview(titleLabel)
+        containerLabelsStackView.addArrangedSubview(bottomStackView)
+        
+    }
+    
+    
+    private func setupBottomStackView() {
+        bottomStackView.axis = .vertical
+        bottomStackView.distribution = .fillEqually
+        bottomStackView.spacing = 8
+        
+        bottomStackView.addArrangedSubview(ratingStackView)
+        bottomStackView.addArrangedSubview(generLabel)
+        
+    }
+    
+    
+    private func setupRatingStackView() {
+        ratingStackView.axis = .horizontal
+        ratingStackView.distribution = .fill
+        ratingStackView.spacing = 3
+        
+        ratingStackView.addArrangedSubview(ratingKeyLabel)
+        ratingStackView.addArrangedSubview(ratingValueLabel)
+        
+    }
+
+
+    
+    
+    
+    
+    private func style() {
+        styleImageView()
+        styleTitleLabel()
+        styleRatingKeyLabel()
+        styleRatingValueLabel()
+        styleGenreLabel()
+        styleLabelsColorsHandleLowerVersions()
+    }
+    
+    
+    
+    private func styleImageView() {
+        gameImageView.image = Constants.Images.logo
+    }
+    
+    private func styleTitleLabel() {
+        titleLabel.text = "GTAAAAAGTAAAAAGTAAAAA GTAAAAAGTAAAAA GTAAAAAGTAAAAA GTAAAAA"
+        titleLabel.font          = UIFont(name: "SFProDisplay-Bold", size: 20)
+        titleLabel.numberOfLines = 2
+    }
+    
+    private func styleRatingKeyLabel() {
+        ratingKeyLabel.font      = UIFont(name: "SFProDisplay-Medium", size: 14)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.5
+        ratingKeyLabel.attributedText = NSMutableAttributedString(string: "metacritic:", attributes: [NSAttributedString.Key.kern: 0.38, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+    }
+    
+    private func styleRatingValueLabel() {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.16
+        ratingValueLabel.textAlignment = .right
+        ratingValueLabel.attributedText = NSMutableAttributedString(string: "95", attributes: [NSAttributedString.Key.kern: 0.38, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        ratingValueLabel.textColor = UIColor(red: 216, green: 0, blue: 0, alpha: 1)
+        ratingValueLabel.font    = UIFont(name: "SFProDisplay-Bold", size: 18)
+    }
+    
+    private func styleGenreLabel() {
+        generLabel.text      = "Action"
+        generLabel.textColor = UIColor(red: 0.541, green: 0.541, blue: 0.561, alpha: 1)
+        generLabel.font      = UIFont(name: "SFProText-Regular", size: 13)
+    }
+    
+    private func styleLabelsColorsHandleLowerVersions() {
+        if #available(iOS 13.0, *) {
+            titleLabel.textColor  = UIColor.label
+            ratingKeyLabel.textColor = UIColor.label
+        } else {
+            titleLabel.textColor = .black
+            ratingKeyLabel.textColor = .black
+        }
+
+    }
+    
+    
+    
+    
+}
+
+//MARK: -  Layout
+extension GameTableCell {
+    
+    private func layout() {
+        addSubviews(gameImageView, containerLabelsStackView)
+        
+        layoutImageView()
+        layoutContainerLabelsStackView()
+    }
+    
+    
+    private func layoutImageView() {
+        NSLayoutConstraint.activate([
+            gameImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            gameImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant:  padding),
+            gameImageView.widthAnchor.constraint(equalToConstant: 120),
+            gameImageView.heightAnchor.constraint(equalToConstant: 104),
+        ])
+    }
+    
+    
+    
+    private func layoutContainerLabelsStackView() {
+        NSLayoutConstraint.activate([
+            containerLabelsStackView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            containerLabelsStackView.leadingAnchor.constraint(equalTo: gameImageView.trailingAnchor, constant: padding),
+            containerLabelsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            containerLabelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
+        ])
+    }
+
+    
+    
 }
