@@ -17,9 +17,9 @@
 		2D343F4628046FE800772908 /* GameTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F4528046FE800772908 /* GameTableCell.swift */; };
 		2D343F4D2804718C00772908 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F4C2804718C00772908 /* UIView+Ext.swift */; };
 		2D343F502804728500772908 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F4F2804728500772908 /* AppTheme.swift */; };
-		2D343F602804869400772908 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F5D2804869400772908 /* SF-Pro-Display-Bold.otf */; };
-		2D343F612804869400772908 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F5E2804869400772908 /* SF-Pro-Display-Medium.otf */; };
-		2D343F622804869400772908 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F5F2804869400772908 /* SF-Pro-Display-Regular.otf */; };
+		2D343F642804882600772908 /* SF Pro Display Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F632804882600772908 /* SF Pro Display Medium.ttf */; };
+		2D343F662804886E00772908 /* SF Pro Display Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F652804886E00772908 /* SF Pro Display Regular.ttf */; };
+		2D343F682804889600772908 /* SF Pro Display Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F672804889600772908 /* SF Pro Display Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,9 +35,9 @@
 		2D343F4528046FE800772908 /* GameTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableCell.swift; sourceTree = "<group>"; };
 		2D343F4C2804718C00772908 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		2D343F4F2804728500772908 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
-		2D343F5D2804869400772908 /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
-		2D343F5E2804869400772908 /* SF-Pro-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.otf"; sourceTree = "<group>"; };
-		2D343F5F2804869400772908 /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
+		2D343F632804882600772908 /* SF Pro Display Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Pro Display Medium.ttf"; sourceTree = "<group>"; };
+		2D343F652804886E00772908 /* SF Pro Display Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Pro Display Regular.ttf"; sourceTree = "<group>"; };
+		2D343F672804889600772908 /* SF Pro Display Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Pro Display Bold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,9 +193,9 @@
 		2D343F512804854300772908 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				2D343F5D2804869400772908 /* SF-Pro-Display-Bold.otf */,
-				2D343F5E2804869400772908 /* SF-Pro-Display-Medium.otf */,
-				2D343F5F2804869400772908 /* SF-Pro-Display-Regular.otf */,
+				2D343F632804882600772908 /* SF Pro Display Medium.ttf */,
+				2D343F652804886E00772908 /* SF Pro Display Regular.ttf */,
+				2D343F672804889600772908 /* SF Pro Display Bold.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -258,11 +258,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D343F612804869400772908 /* SF-Pro-Display-Medium.otf in Resources */,
 				2D343F2828046A2700772908 /* LaunchScreen.storyboard in Resources */,
+				2D343F682804889600772908 /* SF Pro Display Bold.ttf in Resources */,
+				2D343F642804882600772908 /* SF Pro Display Medium.ttf in Resources */,
+				2D343F662804886E00772908 /* SF Pro Display Regular.ttf in Resources */,
 				2D343F2528046A2700772908 /* Assets.xcassets in Resources */,
-				2D343F622804869400772908 /* SF-Pro-Display-Regular.otf in Resources */,
-				2D343F602804869400772908 /* SF-Pro-Display-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
