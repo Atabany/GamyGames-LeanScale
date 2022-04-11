@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol GamesListService {
+    func loadData(completion: @escaping (Result<[GameViewModel], NetworkError>)->())
+}
+
+
 
 struct GamesListViewModel {
     
@@ -15,8 +20,9 @@ struct GamesListViewModel {
             self.reloadTableColsure?()
         }
     }
-
     
+    fileprivate var service: GamesListService!
+
     var reloadTableColsure: (()->())?
     
     
@@ -25,6 +31,8 @@ struct GamesListViewModel {
     }
     
 }
+
+
 
 extension GamesListViewModel {
     
@@ -46,9 +54,6 @@ extension GamesListViewModel {
         return gameViewModels[indexPath.row]
     }
     
-    var heightForRow: CGFloat {
-        return 136
-    }
     
 
     

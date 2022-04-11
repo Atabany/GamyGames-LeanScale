@@ -12,11 +12,12 @@ class GameTableCell: UITableViewCell {
 
     
     static let reuseId = "GameTableCell"
-    static let rowHeight: CGFloat = 112
+    
+    static let rowHeight: CGFloat = 136
     
     let padding: CGFloat = 16
 
-    
+
     let gameImageView             = UIImageView()
     let titleLabel                = UILabel()
     let ratingValueLabel          = UILabel()

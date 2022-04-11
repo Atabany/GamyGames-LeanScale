@@ -20,6 +20,7 @@
 		2D343F642804882600772908 /* SF Pro Display Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F632804882600772908 /* SF Pro Display Medium.ttf */; };
 		2D343F662804886E00772908 /* SF Pro Display Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F652804886E00772908 /* SF Pro Display Regular.ttf */; };
 		2D343F682804889600772908 /* SF Pro Display Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F672804889600772908 /* SF Pro Display Bold.ttf */; };
+		2D343F6B2804893500772908 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F6A2804893500772908 /* WebService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		2D343F632804882600772908 /* SF Pro Display Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Pro Display Medium.ttf"; sourceTree = "<group>"; };
 		2D343F652804886E00772908 /* SF Pro Display Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Pro Display Regular.ttf"; sourceTree = "<group>"; };
 		2D343F672804889600772908 /* SF Pro Display Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Pro Display Bold.ttf"; sourceTree = "<group>"; };
+		2D343F6A2804893500772908 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 		2D343F1A28046A2700772908 /* GamyGammes */ = {
 			isa = PBXGroup;
 			children = (
+				2D343F692804892900772908 /* WebService */,
 				2D343F4E2804727800772908 /* Theme */,
 				2D343F4B2804718000772908 /* Extensions */,
 				2D343F472804700500772908 /* CustomViews */,
@@ -200,6 +203,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		2D343F692804892900772908 /* WebService */ = {
+			isa = PBXGroup;
+			children = (
+				2D343F6A2804893500772908 /* WebService.swift */,
+			);
+			path = WebService;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -273,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D343F6B2804893500772908 /* WebService.swift in Sources */,
 				2D343F4328046F6400772908 /* Constants.swift in Sources */,
 				2D343F4028046EA900772908 /* GameViewModel.swift in Sources */,
 				2D343F4628046FE800772908 /* GameTableCell.swift in Sources */,

@@ -82,7 +82,7 @@ class GamesListTableViewController: UIViewController {
 extension GamesListTableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return viewModel.heightForRow
+        return GameTableCell.rowHeight
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
