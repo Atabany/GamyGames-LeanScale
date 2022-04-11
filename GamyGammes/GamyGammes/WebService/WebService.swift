@@ -30,7 +30,6 @@ struct Resource<T: Codable> {
 
 
 
-
 enum NetworkError: Error {
     case decodingError
     case domainError
@@ -70,11 +69,11 @@ class WebService {
 }
 
 
-struct GamesListWebService:  GamesListService {
+struct GamesListWebService:  GamesListServiceProtcol {
         func loadData(completion: @escaping (Result<[GameViewModel], NetworkError>) -> ()) {
-            WebService.shared.load(resource: resource) { result in
-            completion(result)
-        }
+//            WebService.shared.load(resource: resource) { result in
+//            completion(result)
+//        }
     }
 }
 

@@ -7,28 +7,60 @@
 
 import UIKit
 
-protocol GamesListService {
+protocol GamesListServiceProtcol {
     func loadData(completion: @escaping (Result<[GameViewModel], NetworkError>)->())
 }
 
 
 
-struct GamesListViewModel {
+class GamesListViewModel {
     
+    
+    fileprivate var apiService: GamesListServiceProtcol!
+
     var gameViewModels: [GameViewModel] = [] {
         didSet {
-            self.reloadTableColsure?()
+            self.reloadTableViewClosure?()
         }
     }
     
-    fileprivate var service: GamesListService!
+    
+    // callback for interfaces
+    var state: State = .empty {
+        didSet {
+            self.updateLoadingStatus?()
+        }
+    }
+    
+    
+    var alertMessage: String? {
+        didSet {
+            self.showAlertClosure?()
+        }
+    }
 
-    var reloadTableColsure: (()->())?
     
-    
-    var title: String {
+    var selectedGame: Game?
+
+    var navBarTitle: String {
         return "Games"
     }
+
+    
+    var emptyMessage: String = "No game has been searched."
+    
+
+    
+    var reloadTableViewClosure: (()->())?
+    var showAlertClosure: (()->())?
+    var updateLoadingStatus: (()->())?
+
+    
+    func initFetch() {
+        state = .loading
+    }
+    
+    
     
 }
 
