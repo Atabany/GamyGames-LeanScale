@@ -11,11 +11,7 @@ import UIKit
 
 enum Constants {
     
-    struct Urls {
-        
-
-    }
-    
+   
     
     
     

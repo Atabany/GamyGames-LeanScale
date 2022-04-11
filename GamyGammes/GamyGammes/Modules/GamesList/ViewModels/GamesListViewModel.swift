@@ -8,7 +8,7 @@
 import UIKit
 
 protocol GamesListServiceProtcol {
-    func loadData(completion: @escaping (Result<[GameViewModel], NetworkError>)->())
+    func loadData(page: Int, completion: @escaping (Result<[Game], NetworkError>)->())
 }
 
 
@@ -17,7 +17,12 @@ class GamesListViewModel {
     
     
     fileprivate var apiService: GamesListServiceProtcol!
-
+    
+    init(apiService: GamesListServiceProtcol) {
+        self.apiService = apiService
+    }
+    
+    var games: [Game] = []
     var gameViewModels: [GameViewModel] = [] {
         didSet {
             self.reloadTableViewClosure?()
@@ -58,9 +63,34 @@ class GamesListViewModel {
     
     func initFetch() {
         state = .loading
+        apiService.loadData(page: 1) { [weak self] result in
+            guard let self = self else {return}
+            switch result {
+            case .success(let games):
+                self.processFetchedGames(games: games)
+                self.state = .populated
+            case .failure(let error):
+                self.state = .error
+                self.alertMessage = error.rawValue
+
+            }
+        }
     }
     
     
+    private func processFetchedGames( games: [Game] ) {
+        self.games = games // Cache
+        var vms = [GameViewModel]()
+        for game in games {
+            vms.append( createCellViewModel(game: game) )
+        }
+        self.gameViewModels = vms
+    }
+    
+    
+    func createCellViewModel( game: Game ) -> GameViewModel {
+        return GameViewModel(game: game)
+    }
     
 }
 
@@ -74,8 +104,7 @@ extension GamesListViewModel {
     
     
     func numberOfRowsIn(section: Int) -> Int {
-        return 10
-//        return gameViewModels.count
+        return gameViewModels.count
     }
     
     func gameViewModelAt(indexPath: IndexPath) -> GameViewModel? {
@@ -85,10 +114,6 @@ extension GamesListViewModel {
         }
         return gameViewModels[indexPath.row]
     }
-    
-    
-
-    
 }
 
 

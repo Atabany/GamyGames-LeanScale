@@ -24,6 +24,11 @@
 		2D343F6D2804B3DC00772908 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F6C2804B3DC00772908 /* State.swift */; };
 		2D343F702804B41D00772908 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F6F2804B41D00772908 /* Game.swift */; };
 		2D343F7A2804B9CE00772908 /* UIViewController + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F792804B9CE00772908 /* UIViewController + Ext.swift */; };
+		2D343F7C2804BA7F00772908 /* GameListWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F7B2804BA7F00772908 /* GameListWebService.swift */; };
+		2D343F7E2804BA9700772908 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F7D2804BA9700772908 /* Resources.swift */; };
+		2DFA17372804D353004D57A8 /* URLManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFA17362804D353004D57A8 /* URLManger.swift */; };
+		2DFA17392804D3EA004D57A8 /* GameResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFA17382804D3EA004D57A8 /* GameResources.swift */; };
+		2DFA173B2804DEA9004D57A8 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFA173A2804DEA9004D57A8 /* UIImageView+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +51,11 @@
 		2D343F6C2804B3DC00772908 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		2D343F6F2804B41D00772908 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		2D343F792804B9CE00772908 /* UIViewController + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Ext.swift"; sourceTree = "<group>"; };
+		2D343F7B2804BA7F00772908 /* GameListWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListWebService.swift; sourceTree = "<group>"; };
+		2D343F7D2804BA9700772908 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		2DFA17362804D353004D57A8 /* URLManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManger.swift; sourceTree = "<group>"; };
+		2DFA17382804D3EA004D57A8 /* GameResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResources.swift; sourceTree = "<group>"; };
+		2DFA173A2804DEA9004D57A8 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +200,7 @@
 			children = (
 				2D343F4C2804718C00772908 /* UIView+Ext.swift */,
 				2D343F792804B9CE00772908 /* UIViewController + Ext.swift */,
+				2DFA173A2804DEA9004D57A8 /* UIImageView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -216,6 +227,10 @@
 			isa = PBXGroup;
 			children = (
 				2D343F6A2804893500772908 /* WebService.swift */,
+				2D343F7B2804BA7F00772908 /* GameListWebService.swift */,
+				2D343F7D2804BA9700772908 /* Resources.swift */,
+				2DFA17362804D353004D57A8 /* URLManger.swift */,
+				2DFA17382804D3EA004D57A8 /* GameResources.swift */,
 			);
 			path = WebService;
 			sourceTree = "<group>";
@@ -304,14 +319,19 @@
 				2D343F6B2804893500772908 /* WebService.swift in Sources */,
 				2D343F4328046F6400772908 /* Constants.swift in Sources */,
 				2D343F4028046EA900772908 /* GameViewModel.swift in Sources */,
+				2DFA17392804D3EA004D57A8 /* GameResources.swift in Sources */,
 				2D343F6D2804B3DC00772908 /* State.swift in Sources */,
 				2D343F7A2804B9CE00772908 /* UIViewController + Ext.swift in Sources */,
 				2D343F4628046FE800772908 /* GameTableCell.swift in Sources */,
 				2D343F1C28046A2700772908 /* AppDelegate.swift in Sources */,
 				2D343F702804B41D00772908 /* Game.swift in Sources */,
+				2DFA173B2804DEA9004D57A8 /* UIImageView+Ext.swift in Sources */,
+				2DFA17372804D353004D57A8 /* URLManger.swift in Sources */,
 				2D343F4D2804718C00772908 /* UIView+Ext.swift in Sources */,
+				2D343F7E2804BA9700772908 /* Resources.swift in Sources */,
 				2D343F502804728500772908 /* AppTheme.swift in Sources */,
 				2D343F3E28046E9100772908 /* GamesListViewModel.swift in Sources */,
+				2D343F7C2804BA7F00772908 /* GameListWebService.swift in Sources */,
 				2D343F3628046B8E00772908 /* GamesListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,7 @@ class GamesListTableViewController: UIViewController {
     let emptyStateLabel = UILabel()
     var activityIndicator = UIActivityIndicatorView()
     
-    var viewModel: GamesListViewModel = GamesListViewModel()
+    var viewModel: GamesListViewModel = GamesListViewModel(apiService: GamesListWebService())
     
     
     override func viewDidLoad() {
@@ -177,8 +177,9 @@ extension GamesListTableViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GameTableCell.reuseId, for: indexPath) as? GameTableCell else {return UITableViewCell()}
         
         guard let gameViewModel = viewModel.gameViewModelAt(indexPath: indexPath) else {return UITableViewCell()}
-        
-        //        cell.updateUI(with: weatherViewModel)
+        if let viewModel = viewModel.gameViewModelAt(indexPath: indexPath) {
+            cell.updateUI(with: viewModel)
+        }
         return cell
     }
 }

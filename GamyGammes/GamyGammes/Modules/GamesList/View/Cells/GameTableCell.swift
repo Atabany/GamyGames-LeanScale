@@ -59,10 +59,7 @@ extension GameTableCell {
     private func setup() {
         
         
-        accessoryType = .disclosureIndicator
         selectionStyle = .none
-        
-        
         
         [gameImageView,
         titleLabel,
@@ -96,6 +93,8 @@ extension GameTableCell {
     private func setupBottomStackView() {
         bottomStackView.axis = .vertical
         bottomStackView.distribution = .fillEqually
+        bottomStackView.alignment = .leading
+
         bottomStackView.spacing = 8
         
         bottomStackView.addArrangedSubview(ratingStackView)
@@ -106,11 +105,16 @@ extension GameTableCell {
     
     private func setupRatingStackView() {
         ratingStackView.axis = .horizontal
-        ratingStackView.distribution = .fill
+        ratingStackView.distribution = .fillProportionally
         ratingStackView.spacing = 3
         
         ratingStackView.addArrangedSubview(ratingKeyLabel)
         ratingStackView.addArrangedSubview(ratingValueLabel)
+        
+        
+        ratingKeyLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        ratingValueLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
+
         
     }
 
@@ -135,7 +139,6 @@ extension GameTableCell {
     }
     
     private func styleTitleLabel() {
-        titleLabel.text = "GTAAAAAGTAAAAAGTAAAAA GTAAAAAGTAAAAA GTAAAAAGTAAAAA GTAAAAA"
         titleLabel.font          = UIFont(name: "SFProDisplay-Bold", size: 20)
         titleLabel.numberOfLines = 2
     }
@@ -151,13 +154,12 @@ extension GameTableCell {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.16
         ratingValueLabel.textAlignment = .right
-        ratingValueLabel.attributedText = NSMutableAttributedString(string: "95", attributes: [NSAttributedString.Key.kern: 0.38, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        ratingValueLabel.attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.kern: 0.38, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         ratingValueLabel.textColor = UIColor(red: 216, green: 0, blue: 0, alpha: 1)
         ratingValueLabel.font    = UIFont(name: "SFProDisplay-Bold", size: 18)
     }
     
     private func styleGenreLabel() {
-        generLabel.text      = "Action"
         generLabel.textColor = UIColor(red: 0.541, green: 0.541, blue: 0.561, alpha: 1)
         generLabel.font      = UIFont(name: "SFProText-Regular", size: 13)
     }
@@ -210,5 +212,20 @@ extension GameTableCell {
     }
 
     
+    
+    
+    
+}
+
+
+extension GameTableCell {
+    
+    func updateUI(with viewModel: GameViewModel) {
+        titleLabel.text = viewModel.title
+        generLabel.text = viewModel.generesText
+        titleLabel.text = viewModel.title
+        ratingValueLabel.text = viewModel.ratingText
+        gameImageView.setImage(from: viewModel.imageURL)
+    }
     
 }
