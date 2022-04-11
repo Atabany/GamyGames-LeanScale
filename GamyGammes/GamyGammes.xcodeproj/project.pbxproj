@@ -11,6 +11,12 @@
 		2D343F2528046A2700772908 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F2428046A2700772908 /* Assets.xcassets */; };
 		2D343F2828046A2700772908 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D343F2628046A2700772908 /* LaunchScreen.storyboard */; };
 		2D343F3628046B8E00772908 /* GamesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F3528046B8E00772908 /* GamesListTableViewController.swift */; };
+		2D343F3E28046E9100772908 /* GamesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F3D28046E9100772908 /* GamesListViewModel.swift */; };
+		2D343F4028046EA900772908 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F3F28046EA900772908 /* GameViewModel.swift */; };
+		2D343F4328046F6400772908 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F4228046F6400772908 /* Constants.swift */; };
+		2D343F4628046FE800772908 /* GameTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F4528046FE800772908 /* GameTableCell.swift */; };
+		2D343F4D2804718C00772908 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F4C2804718C00772908 /* UIView+Ext.swift */; };
+		2D343F502804728500772908 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F4F2804728500772908 /* AppTheme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +26,12 @@
 		2D343F2728046A2700772908 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D343F2928046A2700772908 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D343F3528046B8E00772908 /* GamesListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesListTableViewController.swift; sourceTree = "<group>"; };
+		2D343F3D28046E9100772908 /* GamesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesListViewModel.swift; sourceTree = "<group>"; };
+		2D343F3F28046EA900772908 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		2D343F4228046F6400772908 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2D343F4528046FE800772908 /* GameTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableCell.swift; sourceTree = "<group>"; };
+		2D343F4C2804718C00772908 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		2D343F4F2804728500772908 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +64,10 @@
 		2D343F1A28046A2700772908 /* GamyGammes */ = {
 			isa = PBXGroup;
 			children = (
+				2D343F4E2804727800772908 /* Theme */,
+				2D343F4B2804718000772908 /* Extensions */,
+				2D343F472804700500772908 /* CustomViews */,
+				2D343F4128046F5D00772908 /* Utils */,
 				2D343F3A28046BB800772908 /* Support */,
 				2D343F2F28046B5800772908 /* Modules */,
 			);
@@ -69,6 +85,8 @@
 		2D343F3028046B5B00772908 /* GamesList */ = {
 			isa = PBXGroup;
 			children = (
+				2D343F3C28046E2500772908 /* ViewModels */,
+				2D343F3B28046E2300772908 /* Model */,
 				2D343F3128046B5F00772908 /* View */,
 			);
 			path = GamesList;
@@ -77,6 +95,7 @@
 		2D343F3128046B5F00772908 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2D343F4428046FE100772908 /* Cells */,
 				2D343F3228046B6400772908 /* Controller */,
 			);
 			path = View;
@@ -99,6 +118,69 @@
 				2D343F2928046A2700772908 /* Info.plist */,
 			);
 			name = Support;
+			sourceTree = "<group>";
+		};
+		2D343F3B28046E2300772908 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2D343F3C28046E2500772908 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2D343F3D28046E9100772908 /* GamesListViewModel.swift */,
+				2D343F3F28046EA900772908 /* GameViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2D343F4128046F5D00772908 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2D343F4228046F6400772908 /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		2D343F4428046FE100772908 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2D343F4528046FE800772908 /* GameTableCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		2D343F472804700500772908 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				2D343F482804700900772908 /* ImageViews */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		2D343F482804700900772908 /* ImageViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ImageViews;
+			sourceTree = "<group>";
+		};
+		2D343F4B2804718000772908 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2D343F4C2804718C00772908 /* UIView+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2D343F4E2804727800772908 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				2D343F4F2804728500772908 /* AppTheme.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,7 +253,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D343F4328046F6400772908 /* Constants.swift in Sources */,
+				2D343F4028046EA900772908 /* GameViewModel.swift in Sources */,
+				2D343F4628046FE800772908 /* GameTableCell.swift in Sources */,
 				2D343F1C28046A2700772908 /* AppDelegate.swift in Sources */,
+				2D343F4D2804718C00772908 /* UIView+Ext.swift in Sources */,
+				2D343F502804728500772908 /* AppTheme.swift in Sources */,
+				2D343F3E28046E9100772908 /* GamesListViewModel.swift in Sources */,
 				2D343F3628046B8E00772908 /* GamesListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
