@@ -156,7 +156,7 @@ class GamesListTableViewController: UIViewController {
         viewModel.showDetails = { [weak self] () in
             guard let self = self else {return}
             let detailsViewController = GameDetailsViewController()
-            detailsViewController.viewModel = GameDetailsViewModel(service: GamesDetailsWebService(), gameId: self.viewModel.selectedGame?.id ?? 0   )
+            detailsViewController.viewModel = GameDetailsViewModel(service: GamesDetailsWebService(), selectedGame: self.viewModel.selectedGame)
             DispatchQueue.main.async {
                 self.navigationController?.pushViewController(detailsViewController, animated: true)
             }

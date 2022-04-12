@@ -21,7 +21,7 @@ class GameDetailsViewController: UIViewController {
     var websiteButton = ButtonView(title: "Visit website", hasBottomDivider: true)
     
     var activityIndicator = UIActivityIndicatorView()
-    
+    var favoriteButton = UIBarButtonItem()
     
     var padding: CGFloat = 16
     
@@ -56,11 +56,24 @@ extension GameDetailsViewController {
     private func setup() {
         configureNavBar()
         initVM()
+        configureButtonActions()
     }
     
     func configureNavBar() {
-        let favoriteButton = UIBarButtonItem(title: "Favourite", style: .plain, target: self, action: #selector(favoriteButtonAction(_:)))
+        favoriteButton = UIBarButtonItem(title: viewModel.favoruiteButtonTitle, style: .plain, target: self, action: #selector(favoriteButtonAction(_:)))
         navigationItem.rightBarButtonItem = favoriteButton
+    }
+    
+    
+    func configureButtonActions() {
+        
+        redditButton.isUserInteractionEnabled = true
+        redditButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(redditButtonAction)))
+        
+        
+        websiteButton.isUserInteractionEnabled = true
+        websiteButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(websiteButtonAction)))
+        
     }
     
 }
@@ -115,21 +128,23 @@ extension GameDetailsViewController {
         
         viewModel.openReddit = { [weak self] in
             guard let self = self else {return}
-            guard let url = URL(string: self.viewModel.redditURL) else {
-                return
-            }
+            guard let url = URL(string: self.viewModel.redditURL) else { return }
             self.presentSafariVC(with: url)
         }
         
         
         viewModel.openWebsite = { [weak self] in
             guard let self = self else {return}
-            guard let url = URL(string: self.viewModel.website) else {
-                return
-            }
+            guard let url = URL(string: self.viewModel.website) else { return }
             self.presentSafariVC(with: url)
         }
         
+        
+        
+        viewModel.updateFavoriteButton = { [weak self] in
+            guard let self = self else {return}
+            self.favoriteButton.title = self.viewModel.favoruiteButtonTitle
+        }
         
         viewModel.initFetch()
     }
@@ -311,8 +326,27 @@ extension GameDetailsViewController {
 extension GameDetailsViewController {
     @objc
     func favoriteButtonAction(_ sender: UIBarButtonItem) {
-        print("favorite")
+        viewModel.addGameToFavorite()
     }
+    
+    
+    @objc
+    func redditButtonAction() {
+        viewModel.pressReddit()
+    }
+    
+
+    
+    @objc
+    func websiteButtonAction() {
+        viewModel.pressVisitWebsite()
+    }
+    
+
+    
+    
+
+    
 }
 
 

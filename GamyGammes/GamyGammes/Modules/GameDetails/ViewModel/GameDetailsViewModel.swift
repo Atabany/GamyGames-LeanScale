@@ -9,12 +9,13 @@ import Foundation
 
 protocol GameDetailsApiServiceProtocol {
     func loadData(id: Int, completion: @escaping (Result<GameDetails, NetworkError>)->())
-
 }
+
+
 
 class GameDetailsViewModel {
     
-
+    
     private var gameId: Int
     private var gameDetails: GameDetails? {
         didSet {
@@ -22,19 +23,22 @@ class GameDetailsViewModel {
         }
     }
     
+    var selectedGame: Game?
+    
     
     private var apiService: GameDetailsApiServiceProtocol!
-
+    
     
     var showDetails: (()->())?
     var showAlertClosure: (()->())?
     var updateLoadingStatus: (()->())?
     var openWebsite: (()->())?
     var openReddit: (()->())?
-
+    var updateFavoriteButton: (()->())?
     
     
-
+    
+    
     // callback for interfaces
     var state: State = .empty {
         didSet {
@@ -48,12 +52,14 @@ class GameDetailsViewModel {
             self.showAlertClosure?()
         }
     }
-
     
     
-    init(service: GameDetailsApiServiceProtocol, gameId: Int) {
+    
+    init(service: GameDetailsApiServiceProtocol, selectedGame: Game?) {
         self.apiService = service
-        self.gameId = gameId
+        self.gameId = selectedGame?.id ?? 0
+        self.selectedGame = selectedGame
+        self.checkGameFavorited()
     }
     
     func initFetch() {
@@ -95,6 +101,19 @@ class GameDetailsViewModel {
         return gameDetails?.website ?? ""
     }
     
+    var favoruiteButtonTitle: String? {
+        didSet {
+            updateFavoriteButton?()
+        }
+    }
+    
+    var isFavorited: Bool = false {
+        didSet {
+            self.favoruiteButtonTitle =  isFavorited ?  "Favorited" : "Favorite"
+        }
+    }
+    
+    
     func pressReddit() {
         self.openReddit?()
     }
@@ -105,5 +124,29 @@ class GameDetailsViewModel {
     }
     
     
+    func checkGameFavorited()  {
+        guard let selectedGame = self.selectedGame else {return}
+        PersistenceManager.isThisGameAlreadyFavorited(game: selectedGame) { isFavorited in
+            self.isFavorited = isFavorited
+        }
+    }
     
+}
+
+
+//MARK: -  Persistence / Favorite
+extension GameDetailsViewModel {
+    func addGameToFavorite() {
+        guard let selectedGame = self.selectedGame else {return}
+        PersistenceManager.updateWith(favorite: selectedGame, actionType: .add) { [weak self] error in
+            guard let self = self else {return}
+            guard  error == nil else {
+                self.alertMessage = error?.rawValue
+                return
+            }
+            self.alertMessage = "Added To Favorite 🎉"
+            self.checkGameFavorited()
+            return
+        }
+    }
 }

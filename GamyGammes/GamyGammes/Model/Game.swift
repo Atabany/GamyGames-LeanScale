@@ -12,10 +12,13 @@ struct GamesResponse: Codable {
     let next: String?
     let previous: String?
     let results: [Game]?
+    
+    
 }
 
 
-struct Game: Codable {
+struct Game: Codable, Hashable {
+    
         let id: Int?
         let name: String?
         let backgroundImage: String?
@@ -26,6 +29,16 @@ struct Game: Codable {
             case backgroundImage = "background_image"
             case id, name, metacritic, genres
         }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: Game, rhs: Game) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+
 }
 
 
