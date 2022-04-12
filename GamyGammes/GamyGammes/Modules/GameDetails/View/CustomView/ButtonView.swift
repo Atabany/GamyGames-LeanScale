@@ -13,9 +13,14 @@ class ButtonView: UIView {
     let dividerBottomView = UIView()
     let titleLabel = UILabel()
     
-    convenience init(title: String) {
+    var hasBottomDivider: Bool = false
+    
+    
+    convenience init(title: String, hasBottomDivider: Bool) {
         self.init(frame: .zero)
-        self.styleLabel(title: title)
+        styleLabel(title: title)
+        self.hasBottomDivider = hasBottomDivider
+        styleBottomDivider()
     }
     
     override init(frame: CGRect) {
@@ -28,6 +33,12 @@ class ButtonView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIScreen.main.bounds.width, height: 54)
+    }
+    
     
     
 }
@@ -45,34 +56,37 @@ extension ButtonView {
         dividerBottomView.backgroundColor = UIColor.black
         dividerBottomView.translatesAutoresizingMaskIntoConstraints = false
         
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
     }
     
     
-    func layout() {
+    private func styleBottomDivider() {
+        dividerBottomView.alpha = hasBottomDivider ? 1 : 0
+    }
+    
+    private func layout() {
         addSubview(dividerTopView)
         addSubview(titleLabel)
+        
         addSubview(dividerBottomView)
-
+        
         NSLayoutConstraint.activate([
-            dividerTopView.heightAnchor.constraint(equalToConstant: 1),
+            dividerTopView.heightAnchor.constraint(equalToConstant: 0.5),
             dividerTopView.leadingAnchor.constraint(equalTo: leadingAnchor),
             dividerTopView.trailingAnchor.constraint(equalTo: trailingAnchor),
             dividerTopView.topAnchor.constraint(equalTo: topAnchor),
             
             
-            
-            
-            
-            dividerBottomView.heightAnchor.constraint(equalToConstant: 1),
+            dividerBottomView.heightAnchor.constraint(equalToConstant: 0.5),
             dividerBottomView.leadingAnchor.constraint(equalTo: leadingAnchor),
             dividerBottomView.trailingAnchor.constraint(equalTo: trailingAnchor),
             dividerBottomView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             
-            
-            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor)
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
             
         ])
         
@@ -94,3 +108,5 @@ extension ButtonView {
     }
     
 }
+
+

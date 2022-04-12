@@ -22,7 +22,10 @@ class GamesListTableViewController: UIViewController {
         configureVC()
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
     
     private func configureVC() {
         styleEmptyStateLabel()
@@ -35,7 +38,6 @@ class GamesListTableViewController: UIViewController {
             tableView.backgroundColor = .white
         }
         title = viewModel.navBarTitle
-        navigationController?.navigationBar.prefersLargeTitles = true
         configureTableView()
         configureSearchController()
         styleActivityIndicator()

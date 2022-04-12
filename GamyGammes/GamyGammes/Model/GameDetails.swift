@@ -1,21 +1,13 @@
 //
-//  Game.swift
+//  GameDetails.swift
 //  GamyGammes
 //
-//  Created by Mohamed Elatabany on 11/04/2022.
+//  Created by Mohamed Elatabany on 12/04/2022.
 //
 
 import Foundation
 
-struct GamesResponse: Codable {
-    let count: Int?
-    let next: String?
-    let previous: String?
-    let results: [Game]?
-}
-
-
-struct Game: Codable {
+struct GameDetails: Codable {
         let id: Int?
         let name: String?
         let backgroundImage: String?
@@ -27,16 +19,3 @@ struct Game: Codable {
             case id, name, metacritic, genres
         }
 }
-
-
-// MARK: - Genre
-struct Genre: Codable {
-    let id: Int?
-    let name: String?
-}
-
-
-
-
-
-

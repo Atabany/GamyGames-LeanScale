@@ -17,8 +17,8 @@ class GameDetailsViewController: UIViewController {
     var keyGameDescriptionLabel = UILabel()
     var valueGameDescriptionLabel = UILabel()
     var buttonsStackView = UIStackView()
-    var redditButton = UIButton()
-    var websiteButton = UIButton()
+    var redditButton = ButtonView(title: "Visit reddit", hasBottomDivider: false)
+    var websiteButton = ButtonView(title: "Visit website", hasBottomDivider: true)
     
     
     var padding: CGFloat = 16
@@ -29,22 +29,43 @@ class GameDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = false
-        view.backgroundColor = UIColor.white
+        setup()
         style()
         layout()
     }
+    
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+
     
 }
 
 
 extension GameDetailsViewController {
+    private func setup() {
+        configureNavBar()
+    }
+    
+    func configureNavBar() {
+        let favoriteButton = UIBarButtonItem(title: "Favourite", style: .plain, target: self, action: #selector(favoriteButtonAction(_:)))
+        navigationItem.rightBarButtonItem = favoriteButton
+    }
+
+}
+
+extension GameDetailsViewController {
     private func style() {
+        view.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
         styleTitleLabel()
         styleBackgroundImage()
         styleDescriptionKeyLabel()
         styleDescriptionValueLabel()
-        styleButtons()
+        styleButtonsStackView()
     }
     
     
@@ -93,28 +114,13 @@ extension GameDetailsViewController {
     }
     
     
-    private func styleButtons() {
-        [redditButton, websiteButton].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.titleLabel?.font  = UIFont(name: "SFProText-Regular", size: 10)
-            $0.titleLabel?.textColor =  UIColor(red: 0.192, green: 0.192, blue: 0.192, alpha: 1)
-        }
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        
-        paragraphStyle.lineHeightMultiple = 1.08
-        
-        redditButton.titleLabel?.attributedText = NSMutableAttributedString(string: "Visit reddit", attributes: [NSAttributedString.Key.kern: -0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        
-        websiteButton.titleLabel?.attributedText = NSMutableAttributedString(string: "Visit website", attributes: [NSAttributedString.Key.kern: -0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        
+    private func styleButtonsStackView() {
+        buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonsStackView.axis = .vertical
+        buttonsStackView.spacing = 0
+        buttonsStackView.alignment = .leading
+        buttonsStackView.distribution = .fill
     }
-
-    
-    
-
-    
-
 
     
     
@@ -122,14 +128,13 @@ extension GameDetailsViewController {
 
 
 extension GameDetailsViewController {
-    
-    
     private func layout() {
         layoutScrollView()
         layoutBackgroundImage()
         layoutTitleLabel()
         layoutKeyDescriptionLabel()
         layoutValueDescriptionLabel()
+        layoutButtons()
     }
     private func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -148,9 +153,10 @@ extension GameDetailsViewController {
         scrollView.addSubview(backgroundImage)
         NSLayoutConstraint.activate([
             backgroundImage.heightAnchor.constraint(equalToConstant: 291),
-            backgroundImage.leadingAnchor.constraint(equalTo: view.leadingAnchor) ,
-            backgroundImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            backgroundImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            backgroundImage.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor) ,
+            backgroundImage.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            backgroundImage.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            backgroundImage.topAnchor.constraint(equalTo: scrollView.topAnchor)
         ])
     }
     
@@ -158,17 +164,17 @@ extension GameDetailsViewController {
     private func layoutTitleLabel() {
         scrollView.addSubview(titleLabel)
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            titleLabel.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -padding)
+            titleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            titleLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
+            titleLabel.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -padding),
         ])
     }
 
     private func layoutKeyDescriptionLabel() {
         scrollView.addSubview(keyGameDescriptionLabel)
         NSLayoutConstraint.activate([
-            keyGameDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            keyGameDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            keyGameDescriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            keyGameDescriptionLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
             keyGameDescriptionLabel.topAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: padding),
             keyGameDescriptionLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
@@ -178,42 +184,37 @@ extension GameDetailsViewController {
     private func layoutValueDescriptionLabel() {
         scrollView.addSubview(valueGameDescriptionLabel)
         NSLayoutConstraint.activate([
-            valueGameDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            valueGameDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            valueGameDescriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            valueGameDescriptionLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
             valueGameDescriptionLabel.topAnchor.constraint(equalTo: keyGameDescriptionLabel.bottomAnchor, constant: padding),
+
         ])
     }
     
     
     
-//    private func layout() {
-//        scrollView.addSubview(valueGameDescriptionLabel)
-//        NSLayoutConstraint.activate([
-//            valueGameDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-//            valueGameDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-//            valueGameDescriptionLabel.topAnchor.constraint(equalTo: keyGameDescriptionLabel.bottomAnchor, constant: padding),
-//        ])
-//    }
-//
-    
-
-//    private func layoutValueDescriptionLabel() {
-//        scrollView.addSubview(valueGameDescriptionLabel)
-//        NSLayoutConstraint.activate([
-//            valueGameDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-//            valueGameDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-//            valueGameDescriptionLabel.topAnchor.constraint(equalTo: keyGameDescriptionLabel.bottomAnchor, constant: padding),
-//        ])
-//    }
-    
-    
-
-
-
-    
-
-    
-
-    
+    private func layoutButtons() {
+        scrollView.addSubview(buttonsStackView)
+        
+        buttonsStackView.addArrangedSubview(redditButton)
+        buttonsStackView.addArrangedSubview(websiteButton)
+        
+        NSLayoutConstraint.activate([
+            buttonsStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            buttonsStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            buttonsStackView.topAnchor.constraint(equalTo: valueGameDescriptionLabel.bottomAnchor, constant: (padding * 2)),
+            buttonsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -(padding * 4))
+        ])
+    }
     
 }
+
+
+//MARK: - Actioins
+extension GameDetailsViewController {
+    @objc
+    func favoriteButtonAction(_ sender: UIBarButtonItem) {
+        print("favorite")
+    }
+}
+
