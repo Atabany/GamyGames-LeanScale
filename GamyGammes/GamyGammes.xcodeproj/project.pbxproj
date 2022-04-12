@@ -35,10 +35,21 @@
 		2DAD107628053DBC0000ECC3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD107528053DBC0000ECC3 /* Persistence.swift */; };
 		2DAD1078280550F60000ECC3 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD1077280550F60000ECC3 /* Dynamic.swift */; };
 		2DAD107A28056CFE0000ECC3 /* GameListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD107928056CFE0000ECC3 /* GameListProtocol.swift */; };
+		2DAD10822805707E0000ECC3 /* GamyGammesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD10812805707E0000ECC3 /* GamyGammesTests.swift */; };
 		2DFA17372804D353004D57A8 /* URLManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFA17362804D353004D57A8 /* URLManger.swift */; };
 		2DFA17392804D3EA004D57A8 /* GameResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFA17382804D3EA004D57A8 /* GameResources.swift */; };
 		2DFA173B2804DEA9004D57A8 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFA173A2804DEA9004D57A8 /* UIImageView+Ext.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2DAD10832805707E0000ECC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2D343F1028046A2700772908 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2D343F1728046A2700772908;
+			remoteInfo = GamyGammes;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2D343F1828046A2700772908 /* GamyGammes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamyGammes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +82,8 @@
 		2DAD107528053DBC0000ECC3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2DAD1077280550F60000ECC3 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		2DAD107928056CFE0000ECC3 /* GameListProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListProtocol.swift; sourceTree = "<group>"; };
+		2DAD107F2805707E0000ECC3 /* GamyGammesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamyGammesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DAD10812805707E0000ECC3 /* GamyGammesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamyGammesTests.swift; sourceTree = "<group>"; };
 		2DFA17362804D353004D57A8 /* URLManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManger.swift; sourceTree = "<group>"; };
 		2DFA17382804D3EA004D57A8 /* GameResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResources.swift; sourceTree = "<group>"; };
 		2DFA173A2804DEA9004D57A8 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
@@ -84,6 +97,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2DAD107C2805707E0000ECC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -91,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				2D343F1A28046A2700772908 /* GamyGammes */,
+				2DAD10802805707E0000ECC3 /* GamyGammesTests */,
 				2D343F1928046A2700772908 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				2D343F1828046A2700772908 /* GamyGammes.app */,
+				2DAD107F2805707E0000ECC3 /* GamyGammesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -302,6 +324,14 @@
 			path = Persistence;
 			sourceTree = "<group>";
 		};
+		2DAD10802805707E0000ECC3 /* GamyGammesTests */ = {
+			isa = PBXGroup;
+			children = (
+				2DAD10812805707E0000ECC3 /* GamyGammesTests.swift */,
+			);
+			path = GamyGammesTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -322,6 +352,24 @@
 			productReference = 2D343F1828046A2700772908 /* GamyGammes.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2DAD107E2805707E0000ECC3 /* GamyGammesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2DAD10852805707E0000ECC3 /* Build configuration list for PBXNativeTarget "GamyGammesTests" */;
+			buildPhases = (
+				2DAD107B2805707E0000ECC3 /* Sources */,
+				2DAD107C2805707E0000ECC3 /* Frameworks */,
+				2DAD107D2805707E0000ECC3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2DAD10842805707E0000ECC3 /* PBXTargetDependency */,
+			);
+			name = GamyGammesTests;
+			productName = GamyGammesTests;
+			productReference = 2DAD107F2805707E0000ECC3 /* GamyGammesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -334,6 +382,10 @@
 				TargetAttributes = {
 					2D343F1728046A2700772908 = {
 						CreatedOnToolsVersion = 13.2.1;
+					};
+					2DAD107E2805707E0000ECC3 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 2D343F1728046A2700772908;
 					};
 				};
 			};
@@ -351,6 +403,7 @@
 			projectRoot = "";
 			targets = (
 				2D343F1728046A2700772908 /* GamyGammes */,
+				2DAD107E2805707E0000ECC3 /* GamyGammesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -365,6 +418,13 @@
 				2D343F642804882600772908 /* SF Pro Display Medium.ttf in Resources */,
 				2D343F662804886E00772908 /* SF Pro Display Regular.ttf in Resources */,
 				2D343F2528046A2700772908 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DAD107D2805707E0000ECC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +464,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2DAD107B2805707E0000ECC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DAD10822805707E0000ECC3 /* GamyGammesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2DAD10842805707E0000ECC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2D343F1728046A2700772908 /* GamyGammes */;
+			targetProxy = 2DAD10832805707E0000ECC3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2D343F2628046A2700772908 /* LaunchScreen.storyboard */ = {
@@ -588,6 +664,40 @@
 			};
 			name = Release;
 		};
+		2DAD10862805707E0000ECC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.atabany.GamyGammesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GamyGammes.app/GamyGammes";
+			};
+			name = Debug;
+		};
+		2DAD10872805707E0000ECC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.atabany.GamyGammesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GamyGammes.app/GamyGammes";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -605,6 +715,15 @@
 			buildConfigurations = (
 				2D343F2D28046A2700772908 /* Debug */,
 				2D343F2E28046A2700772908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2DAD10852805707E0000ECC3 /* Build configuration list for PBXNativeTarget "GamyGammesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DAD10862805707E0000ECC3 /* Debug */,
+				2DAD10872805707E0000ECC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
