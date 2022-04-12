@@ -8,7 +8,7 @@
 import UIKit
 
 protocol GamesListServiceProtcol {
-    func loadData(page: Int, completion: @escaping (Result<[Game], NetworkError>)->())
+    func loadData(page: Int, search: String? , completion: @escaping (Result<([Game], String?), NetworkError>)->())
 }
 
 
@@ -89,6 +89,7 @@ class GamesListViewModel {
     
     
     var selectedGame: Game?
+    var searchText: String? = nil
     
     lazy var navBarTitle = Dynamic(gamesListScreen.title)
     
@@ -108,6 +109,10 @@ class GamesListViewModel {
     
     
     
+    var next: String?
+    
+    
+    
     var reloadTableViewClosure: (()->())?
     var showAlertClosure: (()->())?
     var updateLoadingStatus: (()->())?
@@ -119,19 +124,35 @@ class GamesListViewModel {
     
     func initFetch() {
         state = .loading
-        apiService.loadData(page: 1) { [weak self] result in
+        loadData(page: 1, loadMore: false)
+    }
+    
+    var page = 1
+    func loadMore() {
+        guard state != .loading else {return}
+        guard next != nil else {return}
+        state = .loading
+        self.page += 1
+        loadData(page: page, loadMore: true)
+    }
+    
+
+    func loadData(page: Int, loadMore: Bool) {
+        apiService.loadData(page: 1, search: searchText) { [weak self] result in
             guard let self = self else {return}
             switch result {
-            case .success(let games):
-                self.processFetchedGames(games: games)
+            case .success((let games, let next)):
+                loadMore ? self.processMoreFetchedGames(games: games) : self.processFetchedGames(games: games)
                 self.updateFavoriteCount()
                 self.setState()
+                self.next = next
             case .failure(let error):
                 self.state = .error
                 self.alertMessage = error.rawValue
             }
         }
     }
+    
     
     
     private func processFetchedGames( games: [Game] ) {
@@ -142,6 +163,19 @@ class GamesListViewModel {
         }
         gameViewModels = vms
     }
+    
+    private func processMoreFetchedGames( games: [Game] ) {
+        self.games += games // Cache
+        var vms = [GameViewModel]()
+        for game in games {
+            vms.append( createCellViewModel(game: game) )
+        }
+        gameViewModels += vms
+    }
+    
+
+    
+    
     
     
     private func setState() {
@@ -220,19 +254,9 @@ extension GamesListViewModel {
     
     
     func search(filter: String) {
-        
-//        guard let filter = searchController.searchBar.text, (filter.count > 3) else {
-//            viewModel.initFetch()
-//            return
-//        }
-        
-        
-        
-        
-        
-        let filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
-        updateData(on: filteredFollowers)
-
+        guard filter.count > 3 else {return}
+        self.searchText = filter
+        self.initFetch()
     }
     
 }

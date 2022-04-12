@@ -99,11 +99,11 @@ enum PersistenceManager {
 
 
 struct FavoritesGamesListService: GamesListServiceProtcol {
-    func loadData(page: Int, completion: @escaping (Result<[Game], NetworkError>) -> ()) {
+    func loadData(page: Int, search: String? = nil , completion: @escaping (Result<([Game], String?), NetworkError>) -> ()) {
         PersistenceManager.retrieveFavorites { result in
             switch result {
             case .success(let favorites):
-                completion(.success(favorites))
+                completion(.success((favorites, nil)))
             case .failure(let error):
                 completion(.failure(error))
 

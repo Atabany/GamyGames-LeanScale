@@ -8,17 +8,27 @@
 import Foundation
 
 struct GamesListWebService:  GamesListServiceProtcol {
-    func loadData(page: Int, completion: @escaping (Result<[Game], NetworkError>) -> ()) {
-        guard let resource = GameResources.gamesListResoruce(page: page) else {
-            completion(.failure(NetworkError.invalidURL))
+    
+    func loadData(page: Int, search: String? = nil, completion: @escaping (Result<([Game], String?), NetworkError>) -> ()) {
+        
+        var resource: Resource<GamesResponse>?
+        
+        if let search = search {
+            resource = GameResources.searchGamesResoruce(page: page, search: search)
+        } else {
+            resource = GameResources.gamesListResoruce(page: page)
+        }
+        
+        guard let resource = resource else {
             return
         }
         
-        NetworkManager.shared.load(resource: resource) { result in
+        NetworkManager.shared.load(resource: resource ) { result in
             switch result {
             case .success(let gamesResponse):
                 let games = gamesResponse.results ?? []
-                completion(.success(games))
+                let next = gamesResponse.next
+                completion(.success((games, next)))
             case .failure(let error):
                 completion(.failure(error))
             }

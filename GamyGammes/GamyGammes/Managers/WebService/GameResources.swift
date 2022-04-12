@@ -53,9 +53,9 @@ struct GameResources {
     
     
     
-    static func searchGameResoruce(page: Int, search: String) -> Resource<GameDetails>? {
+    static func searchGamesResoruce(page: Int, search: String) -> Resource<GamesResponse>? {
         guard let url = APIGamesURLs.searchGamesURL(page: page, search: search) else { return nil }
-        return Resource<GameDetails>(url: url)
+        return Resource<GamesResponse>(url: url)
     }
 
     

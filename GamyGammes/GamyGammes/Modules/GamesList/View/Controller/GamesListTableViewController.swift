@@ -237,16 +237,25 @@ extension GamesListTableViewController: UITableViewDelegate {
 extension GamesListTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let filter = searchController.searchBar.text, (filter.count > 3) else {
-            viewModel.initFetch()
             return
         }
+        viewModel.search(filter: filter)
         
-        
-        let filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
-        updateData(on: filteredFollowers)
-        
+//        let filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
+//        updateData(on: filteredFollowers)
+//        
     }
 }
 
+extension GamesListTableViewController: UICollectionViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY         = scrollView.contentOffset.y
+        let contentHeight   = scrollView.contentSize.height
+        let height          = scrollView.frame.size.height
+        if offsetY > contentHeight - height {
+            self.viewModel.loadMore()
+        }
+    }
+}
 
 

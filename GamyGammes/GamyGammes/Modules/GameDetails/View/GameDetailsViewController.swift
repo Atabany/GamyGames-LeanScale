@@ -174,6 +174,7 @@ extension GameDetailsViewController {
         titleLabel.text = "Grand Theft Auto V"
         titleLabel.textColor = UIColor.white
         titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 2
     }
     
     
@@ -182,7 +183,7 @@ extension GameDetailsViewController {
         backgroundImage.contentMode = .scaleAspectFill
         backgroundImage.clipsToBounds = true
         backgroundImage.image = Constants.Images.logo
-        
+        backgroundImage.addoverlay()
     }
     
     private func styleDescriptionKeyLabel() {
@@ -341,11 +342,6 @@ extension GameDetailsViewController {
     func websiteButtonAction() {
         viewModel.pressVisitWebsite()
     }
-    
-
-    
-    
-
     
 }
 
