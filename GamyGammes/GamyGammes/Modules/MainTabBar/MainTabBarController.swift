@@ -31,7 +31,7 @@ class MainTabBarController: UITabBarController {
     
     func createGamesListNC() -> UINavigationController {
         let searchVC = GamesListTableViewController()
-        searchVC.viewModel = GamesListViewModel(apiService: GamesListWebService())
+        searchVC.viewModel = GamesListViewModel(apiService: GamesListWebService(), gamesListScreen: SearchGames())
         searchVC.tabBarItem = UITabBarItem(title: "Games", image:  Constants.Images.playIcon!, tag: 0)
         let searchNC = UINavigationController(rootViewController: searchVC)
         return searchNC
@@ -40,7 +40,7 @@ class MainTabBarController: UITabBarController {
     
     func createFavoritesNC() -> UINavigationController {
         let favoriteVC = GamesListTableViewController()
-        favoriteVC.viewModel = GamesListViewModel(apiService: FavoritesGamesListService())
+        favoriteVC.viewModel = GamesListViewModel(apiService: FavoritesGamesListService(), gamesListScreen: FavoriteGames())
         favoriteVC.tabBarItem = UITabBarItem(title: "Favorites", image: Constants.Images.favoriteIcon!, tag: 1)
         let favoriteNC = UINavigationController(rootViewController: favoriteVC)
         return favoriteNC

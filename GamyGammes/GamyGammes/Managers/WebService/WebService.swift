@@ -24,6 +24,9 @@ enum NetworkError: String, Error {
     case invalidData            = "The data received from the server is invalid, please try again."
     case requestNotCompleted    = "Request not completed please try again"
     
+    case unableToFavorite       = "Unable to favoriting the game"
+    case alreadyInFavorites     = "You've already favorited this game."
+
     
 }
 

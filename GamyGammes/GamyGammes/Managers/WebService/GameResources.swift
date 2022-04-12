@@ -24,6 +24,18 @@ enum APIGamesURLs {
     }
 
     
+    
+    static func searchGamesURL(page: Int, search: String) -> URL? {
+        return URLManager.shared.GamesURL(with: "/api/games", query: [
+            "page_size": "\(URLManager.shared.pageSize)",
+            "page" : "\(page)",
+            "search": search,
+            "key"  : "3be8af6ebf124ffe81d90f514e59856c",
+            
+        ])
+    }
+
+    
 }
 
 
@@ -38,5 +50,13 @@ struct GameResources {
         guard let url = APIGamesURLs.gameDetails(gameId: id) else { return nil }
         return Resource<GameDetails>(url: url)
     }
+    
+    
+    
+    static func searchGameResoruce(page: Int, search: String) -> Resource<GameDetails>? {
+        guard let url = APIGamesURLs.searchGamesURL(page: page, search: search) else { return nil }
+        return Resource<GameDetails>(url: url)
+    }
 
+    
 }

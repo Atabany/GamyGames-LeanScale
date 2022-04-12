@@ -14,17 +14,20 @@ class GamesListTableViewController: UIViewController {
     let emptyStateLabel = UILabel()
     var activityIndicator = UIActivityIndicatorView()
     
-    var viewModel: GamesListViewModel = GamesListViewModel(apiService: GamesListWebService())
-    
+    var viewModel: GamesListViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureVC()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
+        if let _ = viewModel.gamesListScreen as? FavoriteGames {
+            viewModel.initFetch()
+        }
     }
     
     private func configureVC() {
@@ -37,12 +40,15 @@ class GamesListTableViewController: UIViewController {
         } else {
             tableView.backgroundColor = .white
         }
-        title = viewModel.navBarTitle
+        navigationItem.title = viewModel.navBarTitle.value
         configureTableView()
-        configureSearchController()
         styleActivityIndicator()
         layoutActivityIndicator()
         initVM()
+        
+        if viewModel.canSearch {
+            configureSearchController()
+        }
     }
     
     
@@ -71,7 +77,7 @@ class GamesListTableViewController: UIViewController {
         emptyStateLabel.font = UIFont(name: "SFProDisplay-Medium", size: 18)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.91
-        emptyStateLabel.attributedText = NSMutableAttributedString(string: "No game has been searched.", attributes: [NSAttributedString.Key.kern: 0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        emptyStateLabel.attributedText = NSMutableAttributedString(string: viewModel.emptyMessage, attributes: [NSAttributedString.Key.kern: 0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
     }
     
     
@@ -112,6 +118,17 @@ class GamesListTableViewController: UIViewController {
             DispatchQueue.main.async {
                 if let message = self?.viewModel.alertMessage {
                     self?.showAlert( message )
+                }
+            }
+        }
+        
+        viewModel.showAlertWithHandlerClosure = { [weak self] () in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                if let message = self.viewModel.alertWithHandlerMessage {
+                    self.showAlert( message ) { _ in
+                        self.viewModel.alertHandlerAction()
+                    }
                 }
             }
         }
@@ -162,9 +179,17 @@ class GamesListTableViewController: UIViewController {
             }
         }
         
-        viewModel.initFetch()
-    }
+        viewModel.navBarTitle.bind { [weak self] title in
+            guard let self = self else {return}
+            self.navigationItem.title = title
+        }
         
+        viewModel.initFetch()
+
+        
+        
+    }
+    
 }
 
 
@@ -200,15 +225,25 @@ extension GamesListTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else {return}
-        
+        viewModel.deleteFavoriteAt(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return viewModel.canDelete ? .delete : .none
     }
 }
 
 
 extension GamesListTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, (filter.count > 3) else {
+            viewModel.initFetch()
+            return
+        }
         
         
+        let filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
+        updateData(on: filteredFollowers)
         
     }
 }

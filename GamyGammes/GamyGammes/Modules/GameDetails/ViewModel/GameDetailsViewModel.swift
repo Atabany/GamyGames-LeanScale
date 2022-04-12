@@ -69,7 +69,7 @@ class GameDetailsViewModel {
             switch result {
             case .success(let gameDetails):
                 self.gameDetails = gameDetails
-                self.state = .populated
+                self.state =  .populated
             case .failure(let error):
                 self.state = .error
                 self.alertMessage = error.rawValue
@@ -138,7 +138,7 @@ class GameDetailsViewModel {
 extension GameDetailsViewModel {
     func addGameToFavorite() {
         guard let selectedGame = self.selectedGame else {return}
-        PersistenceManager.updateWith(favorite: selectedGame, actionType: .add) { [weak self] error in
+        PersistenceManager.updateWith(favorite: selectedGame, actionType: .add) { [weak self] (favorite ,error) in
             guard let self = self else {return}
             guard  error == nil else {
                 self.alertMessage = error?.rawValue

@@ -8,18 +8,52 @@
 import UIKit
 
 protocol GamesListServiceProtcol {
-    func loadData(page: Int, completion: @escaping (Result<[Game], Error>)->())
+    func loadData(page: Int, completion: @escaping (Result<[Game], NetworkError>)->())
+}
+
+
+protocol GamesListProtocl {
+    var canDelete: Bool {get}
+    var canSearch: Bool {get}
+    var emptyMessage: String {get}
+    var title: String {get}
+    
+}
+
+
+struct SearchGames: GamesListProtocl {
+    var canDelete: Bool = false
+    var canSearch: Bool = true
+    var emptyMessage: String = "No game has been searched."
+    var title: String   = "Games"
+}
+
+
+struct FavoriteGames: GamesListProtocl {
+    var canDelete: Bool = true
+    var canSearch: Bool  = false
+    var emptyMessage: String = "There is no favourites found."
+    var favoriteCount: Int = 0
+    var title: String   {
+        if favoriteCount > 0 {
+            return "Favorites (\(favoriteCount))"
+        }
+        return "Favorites"
+    }
 }
 
 
 
 class GamesListViewModel {
     
-
+    
     fileprivate var apiService: GamesListServiceProtcol!
     
-    init(apiService: GamesListServiceProtcol) {
+    var gamesListScreen: GamesListProtocl!
+    
+    init(apiService: GamesListServiceProtcol, gamesListScreen: GamesListProtocl) {
         self.apiService = apiService
+        self.gamesListScreen = gamesListScreen
     }
     
     var games: [Game] = []
@@ -29,7 +63,7 @@ class GamesListViewModel {
         }
     }
     
-
+    
     // callback for interfaces
     var state: State = .empty {
         didSet {
@@ -43,25 +77,44 @@ class GamesListViewModel {
             self.showAlertClosure?()
         }
     }
-
     
-    var selectedGame: Game?
-
-    var navBarTitle: String {
-        return "Games"
+    var alertWithHandlerMessage: String? {
+        didSet {
+            self.showAlertWithHandlerClosure?()
+        }
     }
 
     
-    var emptyMessage: String = "No game has been searched."
     
-
+    
+    
+    var selectedGame: Game?
+    
+    lazy var navBarTitle = Dynamic(gamesListScreen.title)
+    
+    
+    
+    var emptyMessage: String {
+        return gamesListScreen.emptyMessage
+    }
+    
+    var canDelete: Bool {
+        return gamesListScreen.canDelete
+    }
+    
+    var canSearch: Bool {
+        return gamesListScreen.canSearch
+    }
+    
+    
     
     var reloadTableViewClosure: (()->())?
     var showAlertClosure: (()->())?
     var updateLoadingStatus: (()->())?
     var showDetails: (()->())?
+    var showAlertWithHandlerClosure: (()->())?
 
-    
+    var selectedIndedxPathForDeletion: IndexPath?
     
     
     func initFetch() {
@@ -71,11 +124,11 @@ class GamesListViewModel {
             switch result {
             case .success(let games):
                 self.processFetchedGames(games: games)
-                self.state = .populated
+                self.updateFavoriteCount()
+                self.setState()
             case .failure(let error):
                 self.state = .error
-                self.alertMessage = error.localizedDescription
-
+                self.alertMessage = error.rawValue
             }
         }
     }
@@ -87,12 +140,25 @@ class GamesListViewModel {
         for game in games {
             vms.append( createCellViewModel(game: game) )
         }
-        self.gameViewModels = vms
+        gameViewModels = vms
     }
     
     
-    func createCellViewModel( game: Game ) -> GameViewModel {
+    private func setState() {
+        self.state = gameViewModels.count > 0 ? .populated : .empty
+    }
+    
+    private func createCellViewModel( game: Game ) -> GameViewModel {
         return GameViewModel(game: game)
+    }
+    
+    private func updateFavoriteCount() {
+        if var gamesListScreen = gamesListScreen as? FavoriteGames {
+            gamesListScreen.favoriteCount = gameViewModels.count
+            self.gamesListScreen = gamesListScreen
+            self.navBarTitle.value = gamesListScreen.title
+        }
+        
     }
     
 }
@@ -100,7 +166,6 @@ class GamesListViewModel {
 
 
 extension GamesListViewModel {
-    
     var numberOfSections: Int {
         return 1
     }
@@ -126,6 +191,48 @@ extension GamesListViewModel {
         selectedGame = gameViewModels[indexPath.row].game
         self.showDetails?()
     }
+    
+    func deleteFavoriteAt(indexPath: IndexPath) {
+        self.selectedIndedxPathForDeletion = indexPath
+        self.alertWithHandlerMessage = "Do you want to remove this game from favorite?"
+    }
+    
+    func alertHandlerAction() {
+        guard let selectedIndedxPathForDeletion = selectedIndedxPathForDeletion else {return}
+        PersistenceManager.updateWith(favorite: games[selectedIndedxPathForDeletion.row], actionType: .remove) { [weak self] (favorite, error) in
+            guard let self = self else {return}
+            if let error = error {
+                self.alertMessage = error.rawValue
+                return
+            }
+            self.games.remove(at: selectedIndedxPathForDeletion.row)
+            self.gameViewModels.remove(at: selectedIndedxPathForDeletion.row)
+            
+            self.updateFavoriteCount()
+
+            if self.gameViewModels.isEmpty {
+                self.state = .empty
+                return
+            }
+        }
+
+    }
+    
+    
+    func search(filter: String) {
+        
+//        guard let filter = searchController.searchBar.text, (filter.count > 3) else {
+//            viewModel.initFetch()
+//            return
+//        }
+        
+        
+        
+        
+        
+        let filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
+        updateData(on: filteredFollowers)
+
+    }
+    
 }
-
-

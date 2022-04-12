@@ -12,11 +12,8 @@ enum PersistenceActionType {
 }
 
 
-enum PersistenceError: String, Error {
-    case unableToFavorite       = "Unable to favoriting the game"
-    case alreadyInFavorites     = "You've already favorited this game."
-    
-}
+
+
 
 enum PersistenceManager {
     
@@ -46,29 +43,29 @@ enum PersistenceManager {
         }
     }
     
-    static func updateWith(favorite: Game, actionType: PersistenceActionType, completed: @escaping (PersistenceError?)->()) {
+    static func updateWith(favorite: Game, actionType: PersistenceActionType, completed: @escaping ([Game] ,NetworkError?)->()) {
         retrieveFavorites { result in
             switch result {
             case .success(var favorites):
                 switch actionType {
                 case .add:
-                    guard !favorites.contains(favorite) else {completed(.alreadyInFavorites); return}
+                    guard !favorites.contains(favorite) else {completed(favorites,.alreadyInFavorites); return}
                     favorites.append(favorite)
                     break
                 case .remove:
                     favorites.removeAll {$0.id == favorite.id }
                     break
                 }
-                completed(save(favorites: favorites))
+                completed(favorites, save(favorites: favorites))
             case .failure(let error):
-                completed(error)
+                completed([],error)
                 break
             }
         }
     }
     
     
-    static  func retrieveFavorites(completed: @escaping (Result<[Game], PersistenceError>) -> ()) {
+    static  func retrieveFavorites(completed: @escaping (Result<[Game], NetworkError>) -> ()) {
         guard let favoritesData = defaults.object(forKey: keys.favorites) as? Data else {
             completed(.success([]))
             return
@@ -85,7 +82,7 @@ enum PersistenceManager {
     }
     
     
-    static private func save(favorites: [Game]) -> PersistenceError? {
+    static private func save(favorites: [Game]) -> NetworkError? {
         do {
             let encoder         = JSONEncoder()
             let data            =  try encoder.encode(favorites)
@@ -102,7 +99,7 @@ enum PersistenceManager {
 
 
 struct FavoritesGamesListService: GamesListServiceProtcol {
-    func loadData(page: Int, completion: @escaping (Result<[Game], Error>) -> ()) {
+    func loadData(page: Int, completion: @escaping (Result<[Game], NetworkError>) -> ()) {
         PersistenceManager.retrieveFavorites { result in
             switch result {
             case .success(let favorites):

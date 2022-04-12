@@ -8,7 +8,7 @@
 import Foundation
 
 struct GamesListWebService:  GamesListServiceProtcol {
-    func loadData(page: Int, completion: @escaping (Result<[Game], Error>) -> ()) {
+    func loadData(page: Int, completion: @escaping (Result<[Game], NetworkError>) -> ()) {
         guard let resource = GameResources.gamesListResoruce(page: page) else {
             completion(.failure(NetworkError.invalidURL))
             return
