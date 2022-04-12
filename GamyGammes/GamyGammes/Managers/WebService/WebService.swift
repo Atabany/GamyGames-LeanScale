@@ -26,8 +26,6 @@ enum NetworkError: String, Error {
     
     case unableToFavorite       = "Unable to favoriting the game"
     case alreadyInFavorites     = "You've already favorited this game."
-
-    
 }
 
 
@@ -38,13 +36,6 @@ class NetworkManager {
     let decoder         =  JSONDecoder()
     
     private init() {}
-    
-    
-    
-    
-    
-    
-    
     
     func load<T>(resource: Resource<T>, completion: @escaping (Result<T, NetworkError>) -> Void) {
         var request = URLRequest(url: resource.url)
@@ -65,10 +56,6 @@ class NetworkManager {
         }.resume()
         
     }
-    
-    
-    
-    
     
 }
 

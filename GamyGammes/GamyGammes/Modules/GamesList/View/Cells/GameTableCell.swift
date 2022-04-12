@@ -199,9 +199,6 @@ extension GameTableCell {
             containerLabelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
          ])
     }
-
-    
-    
     
     
 }

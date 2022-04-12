@@ -22,7 +22,7 @@ struct GameDetails: Codable {
         case redditURL = "reddit_url"
         
     }
-
+    
 }
 
 

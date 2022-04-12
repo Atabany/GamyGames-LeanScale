@@ -5,50 +5,12 @@
 //  Created by Mohamed Elatabany on 11/04/2022.
 //
 
-import UIKit
-
-protocol GamesListServiceProtcol {
-    func loadData(page: Int, search: String? , completion: @escaping (Result<([Game], String?), NetworkError>)->())
-}
-
-
-protocol GamesListProtocl {
-    var canDelete: Bool {get}
-    var canSearch: Bool {get}
-    var emptyMessage: String {get}
-    var title: String {get}
-    
-}
-
-
-struct SearchGames: GamesListProtocl {
-    var canDelete: Bool = false
-    var canSearch: Bool = true
-    var emptyMessage: String = "No game has been searched."
-    var title: String   = "Games"
-}
-
-
-struct FavoriteGames: GamesListProtocl {
-    var canDelete: Bool = true
-    var canSearch: Bool  = false
-    var emptyMessage: String = "There is no favourites found."
-    var favoriteCount: Int = 0
-    var title: String   {
-        if favoriteCount > 0 {
-            return "Favorites (\(favoriteCount))"
-        }
-        return "Favorites"
-    }
-}
-
-
+import Foundation
 
 class GamesListViewModel {
     
     
-    fileprivate var apiService: GamesListServiceProtcol!
-    
+    private var apiService: GamesListServiceProtcol!
     var gamesListScreen: GamesListProtocl!
     
     init(apiService: GamesListServiceProtcol, gamesListScreen: GamesListProtocl) {
@@ -57,6 +19,16 @@ class GamesListViewModel {
     }
     
     var games: [Game] = []
+    
+    // Pagination
+    var next: String?
+    var page = 1
+    
+    
+    lazy var navBarTitle = Dynamic(gamesListScreen.title)
+    
+    
+    // callback for interfaces
     var gameViewModels: [GameViewModel] = [] {
         didSet {
             self.reloadTableViewClosure?()
@@ -64,7 +36,6 @@ class GamesListViewModel {
     }
     
     
-    // callback for interfaces
     var state: State = .empty {
         didSet {
             self.updateLoadingStatus?()
@@ -83,15 +54,13 @@ class GamesListViewModel {
             self.showAlertWithHandlerClosure?()
         }
     }
-
-    
-    
     
     
     var selectedGame: Game?
+    
+    // Search
     var searchText: String? = nil
     
-    lazy var navBarTitle = Dynamic(gamesListScreen.title)
     
     
     
@@ -109,8 +78,6 @@ class GamesListViewModel {
     
     
     
-    var next: String?
-    
     
     
     var reloadTableViewClosure: (()->())?
@@ -118,8 +85,14 @@ class GamesListViewModel {
     var updateLoadingStatus: (()->())?
     var showDetails: (()->())?
     var showAlertWithHandlerClosure: (()->())?
-
+    
     var selectedIndedxPathForDeletion: IndexPath?
+    
+}
+
+//MARK: - Fetch Data
+
+extension GamesListViewModel {
     
     
     func initFetch() {
@@ -127,7 +100,6 @@ class GamesListViewModel {
         loadData(page: 1, loadMore: false)
     }
     
-    var page = 1
     func loadMore() {
         guard state != .loading else {return}
         guard next != nil else {return}
@@ -136,7 +108,7 @@ class GamesListViewModel {
         loadData(page: page, loadMore: true)
     }
     
-
+    
     func loadData(page: Int, loadMore: Bool) {
         apiService.loadData(page: 1, search: searchText) { [weak self] result in
             guard let self = self else {return}
@@ -173,7 +145,7 @@ class GamesListViewModel {
         gameViewModels += vms
     }
     
-
+    
     
     
     
@@ -198,6 +170,7 @@ class GamesListViewModel {
 }
 
 
+//MARK: -  Table Data source & delegate
 
 extension GamesListViewModel {
     var numberOfSections: Int {
@@ -228,7 +201,7 @@ extension GamesListViewModel {
     
     func deleteFavoriteAt(indexPath: IndexPath) {
         self.selectedIndedxPathForDeletion = indexPath
-        self.alertWithHandlerMessage = "Do you want to remove this game from favorite?"
+        self.alertWithHandlerMessage = Constants.Strings.deletAlertMessage
     }
     
     func alertHandlerAction() {
@@ -243,13 +216,13 @@ extension GamesListViewModel {
             self.gameViewModels.remove(at: selectedIndedxPathForDeletion.row)
             
             self.updateFavoriteCount()
-
+            
             if self.gameViewModels.isEmpty {
                 self.state = .empty
                 return
             }
         }
-
+        
     }
     
     

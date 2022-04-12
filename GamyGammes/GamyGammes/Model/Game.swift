@@ -19,16 +19,16 @@ struct GamesResponse: Codable {
 
 struct Game: Codable, Hashable {
     
-        let id: Int?
-        let name: String?
-        let backgroundImage: String?
-        let metacritic: Int?
-        let genres: [Genre]?
-
-        enum CodingKeys: String, CodingKey {
-            case backgroundImage = "background_image"
-            case id, name, metacritic, genres
-        }
+    let id: Int?
+    let name: String?
+    let backgroundImage: String?
+    let metacritic: Int?
+    let genres: [Genre]?
+    
+    enum CodingKeys: String, CodingKey {
+        case backgroundImage = "background_image"
+        case id, name, metacritic, genres
+    }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -37,8 +37,8 @@ struct Game: Codable, Hashable {
     static func == (lhs: Game, rhs: Game) -> Bool {
         return lhs.id == rhs.id
     }
-
-
+    
+    
 }
 
 

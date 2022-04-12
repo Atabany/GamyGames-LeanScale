@@ -7,19 +7,21 @@
 
 import UIKit
 
+import UIKit
 class GamesListTableViewController: UIViewController {
-    
+
     let tableView = UITableView()
     var searchController: UISearchController!
     let emptyStateLabel = UILabel()
     var activityIndicator = UIActivityIndicatorView()
     
     var viewModel: GamesListViewModel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureVC()
-        
+        style()
+        layout()
+        setup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,32 +32,26 @@ class GamesListTableViewController: UIViewController {
         }
     }
     
-    private func configureVC() {
-        styleEmptyStateLabel()
-        layoutEmptyStateLabel()
-        
-        view.backgroundColor = AppTheme.shared.gamesBackgroundColor
-        if #available(iOS 13.0, *) {
-            tableView.backgroundColor = .systemBackground
-        } else {
-            tableView.backgroundColor = .white
-        }
-        navigationItem.title = viewModel.navBarTitle.value
-        configureTableView()
-        styleActivityIndicator()
-        layoutActivityIndicator()
-        initVM()
-        
+}
+
+
+extension GamesListTableViewController {
+    private func setup() {
         if viewModel.canSearch {
             configureSearchController()
         }
+        navigationItem.title = viewModel.navBarTitle.value
+        initVM()
+        setupTableView()
     }
-    
+
+
+
     
     func configureSearchController() {
         searchController                                       = UISearchController()
         searchController.searchResultsUpdater                  = self
-        searchController.searchBar.placeholder                 = "Search for the games"
+        searchController.searchBar.placeholder                 = Constants.Strings.searchForTheGame
         searchController.obscuresBackgroundDuringPresentation  = false
         navigationItem.searchController                        = searchController
         navigationItem.hidesSearchBarWhenScrolling             = false
@@ -63,7 +59,7 @@ class GamesListTableViewController: UIViewController {
     
     
     
-    private func configureTableView() {
+    private func setupTableView() {
         view.addSubview(tableView)
         tableView.frame = self.view.bounds
         tableView.register(GameTableCell.self, forCellReuseIdentifier: GameTableCell.reuseId)
@@ -71,46 +67,11 @@ class GamesListTableViewController: UIViewController {
         tableView.delegate = self
     }
     
-    
-    private func styleEmptyStateLabel() {
-        emptyStateLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        emptyStateLabel.font = UIFont(name: "SFProDisplay-Medium", size: 18)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.91
-        emptyStateLabel.attributedText = NSMutableAttributedString(string: viewModel.emptyMessage, attributes: [NSAttributedString.Key.kern: 0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
-    }
-    
-    
-    private func layoutEmptyStateLabel() {
-        
-        view.addSubview(emptyStateLabel)
-        emptyStateLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            emptyStateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
-            emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
-    }
-    
-    
-    private func styleActivityIndicator() {
-        if #available(iOS 13.0, *) {
-            activityIndicator =  UIActivityIndicatorView(style: .large)
-        }
-    }
-    
-    
-    private func layoutActivityIndicator() {
-        view.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-    }
-    
-    
-    
+}
+
+//MARK: - View Model - Binding & init
+
+extension GamesListTableViewController {
     func initVM() {
         
         // Naive binding
@@ -172,8 +133,7 @@ class GamesListTableViewController: UIViewController {
         
         viewModel.showDetails = { [weak self] () in
             guard let self = self else {return}
-            let detailsViewController = GameDetailsViewController()
-            detailsViewController.viewModel = GameDetailsViewModel(service: GamesDetailsWebService(), selectedGame: self.viewModel.selectedGame)
+            let detailsViewController = GameDetailsViewController(viewModel: GameDetailsViewModel(service: GamesDetailsWebService(), selectedGame: self.viewModel.selectedGame))
             DispatchQueue.main.async {
                 self.navigationController?.pushViewController(detailsViewController, animated: true)
             }
@@ -185,11 +145,76 @@ class GamesListTableViewController: UIViewController {
         }
         
         viewModel.initFetch()
-
-        
         
     }
+}
+
+
+
+//MARK: -  Style
+extension GamesListTableViewController {
+    private func style() {
+        view.backgroundColor = AppTheme.shared.gamesBackgroundColor
+        if #available(iOS 13.0, *) {
+            tableView.backgroundColor = .systemBackground
+        } else {
+            tableView.backgroundColor = .white
+        }
+        
+        styleActivityIndicator()
+        styleEmptyStateLabel()
+    }
     
+    private func styleActivityIndicator() {
+        if #available(iOS 13.0, *) {
+            activityIndicator =  UIActivityIndicatorView(style: .large)
+        }
+    }
+    
+    private func styleEmptyStateLabel() {
+        emptyStateLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        emptyStateLabel.font = UIFont(name: "SFProDisplay-Medium", size: 18)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.91
+        emptyStateLabel.attributedText = NSMutableAttributedString(string: viewModel.emptyMessage, attributes: [NSAttributedString.Key.kern: 0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+    }
+    
+}
+
+//MARK: -  Layout
+extension GamesListTableViewController {
+    
+    private func layout() {
+        layoutEmptyStateLabel()
+        layoutActivityIndicator()
+    }
+    
+    
+    
+    private func layoutEmptyStateLabel() {
+        view.addSubview(emptyStateLabel)
+        emptyStateLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            emptyStateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
+            emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+    }
+    
+    
+ 
+    
+    
+    private func layoutActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+
 }
 
 
@@ -240,13 +265,11 @@ extension GamesListTableViewController: UISearchResultsUpdating {
             return
         }
         viewModel.search(filter: filter)
-        
-//        let filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
-//        updateData(on: filteredFollowers)
-//        
     }
 }
 
+
+//MARK: -  Pagination
 extension GamesListTableViewController: UICollectionViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY         = scrollView.contentOffset.y

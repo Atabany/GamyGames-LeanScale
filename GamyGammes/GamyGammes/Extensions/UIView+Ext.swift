@@ -12,9 +12,7 @@ extension UIView {
         subivews.forEach {addSubview($0)}
     }
     
-    
-    
-    
+
     //This function will add a layer on any `UIView` to make that `UIView` look darkened
     func addoverlay(color: UIColor = .black,alpha : CGFloat = 0.6) {
         let overlay = UIView()

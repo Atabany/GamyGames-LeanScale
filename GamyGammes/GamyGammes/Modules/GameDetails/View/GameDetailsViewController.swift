@@ -19,19 +19,24 @@ class GameDetailsViewController: UIViewController {
     var buttonsStackView = UIStackView()
     var redditButton = ButtonView(title: "Visit reddit", hasBottomDivider: false)
     var websiteButton = ButtonView(title: "Visit website", hasBottomDivider: true)
-    
     var activityIndicator = UIActivityIndicatorView()
     var favoriteButton = UIBarButtonItem()
     
     var padding: CGFloat = 16
-    
     
     var descriptionAttributedText: NSAttributedString?
     
     var viewModel: GameDetailsViewModel!
     
     
+    init(viewModel: GameDetailsViewModel) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func viewDidLoad() {
@@ -42,12 +47,10 @@ class GameDetailsViewController: UIViewController {
     }
     
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
     }
-    
     
 }
 
@@ -59,6 +62,7 @@ extension GameDetailsViewController {
         configureButtonActions()
     }
     
+    
     func configureNavBar() {
         favoriteButton = UIBarButtonItem(title: viewModel.favoruiteButtonTitle, style: .plain, target: self, action: #selector(favoriteButtonAction(_:)))
         navigationItem.rightBarButtonItem = favoriteButton
@@ -66,7 +70,7 @@ extension GameDetailsViewController {
     
     
     func configureButtonActions() {
-        
+
         redditButton.isUserInteractionEnabled = true
         redditButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(redditButtonAction)))
         

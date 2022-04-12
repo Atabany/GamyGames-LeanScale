@@ -11,22 +11,20 @@ protocol GameDetailsApiServiceProtocol {
     func loadData(id: Int, completion: @escaping (Result<GameDetails, NetworkError>)->())
 }
 
-
-
 class GameDetailsViewModel {
     
-    
     private var gameId: Int
-    private var gameDetails: GameDetails? {
-        didSet {
-            showDetails?()
-        }
-    }
-    
     var selectedGame: Game?
-    
-    
     private var apiService: GameDetailsApiServiceProtocol!
+    
+    
+    init(service: GameDetailsApiServiceProtocol, selectedGame: Game?) {
+        self.apiService = service
+        self.gameId = selectedGame?.id ?? 0
+        self.selectedGame = selectedGame
+        self.checkGameFavorited()
+    }
+
     
     
     var showDetails: (()->())?
@@ -35,11 +33,17 @@ class GameDetailsViewModel {
     var openWebsite: (()->())?
     var openReddit: (()->())?
     var updateFavoriteButton: (()->())?
-    
-    
+
     
     
     // callback for interfaces
+    
+    private var gameDetails: GameDetails? {
+        didSet {
+            showDetails?()
+        }
+    }
+
     var state: State = .empty {
         didSet {
             self.updateLoadingStatus?()
@@ -53,14 +57,6 @@ class GameDetailsViewModel {
         }
     }
     
-    
-    
-    init(service: GameDetailsApiServiceProtocol, selectedGame: Game?) {
-        self.apiService = service
-        self.gameId = selectedGame?.id ?? 0
-        self.selectedGame = selectedGame
-        self.checkGameFavorited()
-    }
     
     func initFetch() {
         state = .loading
@@ -76,9 +72,7 @@ class GameDetailsViewModel {
             }
         }
     }
-    
-    
-    
+
     
     var backgroundImageURL: String {
         return gameDetails?.backgroundImage ?? ""
