@@ -24,7 +24,9 @@ enum Constants {
     }
     
     enum Images {
-        static let logo = UIImage(named: "logo") 
+        static let logo = UIImage(named: "logo")
+        static let playIcon = UIImage(named: "PlayIcon")
+        static let favoriteIcon = UIImage(named: "FavoriteIcon")
     }
 }
 

@@ -15,7 +15,7 @@ protocol GamesListServiceProtcol {
 
 class GamesListViewModel {
     
-    
+
     fileprivate var apiService: GamesListServiceProtcol!
     
     init(apiService: GamesListServiceProtcol) {
@@ -29,7 +29,7 @@ class GamesListViewModel {
         }
     }
     
-    
+
     // callback for interfaces
     var state: State = .empty {
         didSet {
@@ -59,7 +59,10 @@ class GamesListViewModel {
     var reloadTableViewClosure: (()->())?
     var showAlertClosure: (()->())?
     var updateLoadingStatus: (()->())?
+    var showDetails: (()->())?
 
+    
+    
     
     func initFetch() {
         state = .loading
@@ -113,6 +116,14 @@ extension GamesListViewModel {
             return nil
         }
         return gameViewModels[indexPath.row]
+    }
+    
+    
+    func didSelectViewModel(at indexPath: IndexPath) {
+        guard indexPath.row < gameViewModels.count else {
+            return
+        }
+        self.showDetails?()
     }
 }
 

@@ -150,6 +150,16 @@ class GamesListTableViewController: UIViewController {
             }
         }
         
+        
+        viewModel.showDetails = { [weak self] () in
+            guard let self = self else {return}
+            let detailsViewController = GameDetailsViewController()
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(detailsViewController, animated: true)
+            }
+        }
+
+        
         viewModel.initFetch()
         
     }
@@ -175,8 +185,6 @@ extension GamesListTableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GameTableCell.reuseId, for: indexPath) as? GameTableCell else {return UITableViewCell()}
-        
-        guard let gameViewModel = viewModel.gameViewModelAt(indexPath: indexPath) else {return UITableViewCell()}
         if let viewModel = viewModel.gameViewModelAt(indexPath: indexPath) {
             cell.updateUI(with: viewModel)
         }
@@ -188,8 +196,7 @@ extension GamesListTableViewController: UITableViewDataSource {
 extension GamesListTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
+        viewModel.didSelectViewModel(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

@@ -38,7 +38,6 @@ struct URLManager {
             
             urlComponents.queryItems = queryItems
         }
-        print(urlComponents.url)
         return urlComponents.url
     }
     

@@ -26,6 +26,10 @@
 		2D343F7A2804B9CE00772908 /* UIViewController + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F792804B9CE00772908 /* UIViewController + Ext.swift */; };
 		2D343F7C2804BA7F00772908 /* GameListWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F7B2804BA7F00772908 /* GameListWebService.swift */; };
 		2D343F7E2804BA9700772908 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D343F7D2804BA9700772908 /* Resources.swift */; };
+		2DAD105F2804EA7B0000ECC3 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD105E2804EA7B0000ECC3 /* MainTabBarController.swift */; };
+		2DAD10632804EF4B0000ECC3 /* GameDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD10622804EF4B0000ECC3 /* GameDetailsViewController.swift */; };
+		2DAD10692804FD1E0000ECC3 /* GameDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD10682804FD1E0000ECC3 /* GameDetailsViewModel.swift */; };
+		2DAD106C28051FEF0000ECC3 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD106B28051FEF0000ECC3 /* ButtonView.swift */; };
 		2DFA17372804D353004D57A8 /* URLManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFA17362804D353004D57A8 /* URLManger.swift */; };
 		2DFA17392804D3EA004D57A8 /* GameResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFA17382804D3EA004D57A8 /* GameResources.swift */; };
 		2DFA173B2804DEA9004D57A8 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFA173A2804DEA9004D57A8 /* UIImageView+Ext.swift */; };
@@ -53,6 +57,10 @@
 		2D343F792804B9CE00772908 /* UIViewController + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Ext.swift"; sourceTree = "<group>"; };
 		2D343F7B2804BA7F00772908 /* GameListWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListWebService.swift; sourceTree = "<group>"; };
 		2D343F7D2804BA9700772908 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		2DAD105E2804EA7B0000ECC3 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		2DAD10622804EF4B0000ECC3 /* GameDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailsViewController.swift; sourceTree = "<group>"; };
+		2DAD10682804FD1E0000ECC3 /* GameDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailsViewModel.swift; sourceTree = "<group>"; };
+		2DAD106B28051FEF0000ECC3 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		2DFA17362804D353004D57A8 /* URLManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManger.swift; sourceTree = "<group>"; };
 		2DFA17382804D3EA004D57A8 /* GameResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResources.swift; sourceTree = "<group>"; };
 		2DFA173A2804DEA9004D57A8 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
@@ -103,6 +111,8 @@
 		2D343F2F28046B5800772908 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				2DAD10602804EDEB0000ECC3 /* GameDetails */,
+				2DAD105D2804EA6E0000ECC3 /* MainTabBar */,
 				2D343F3028046B5B00772908 /* GamesList */,
 			);
 			path = Modules;
@@ -243,6 +253,48 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		2DAD105D2804EA6E0000ECC3 /* MainTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				2DAD105E2804EA7B0000ECC3 /* MainTabBarController.swift */,
+			);
+			path = MainTabBar;
+			sourceTree = "<group>";
+		};
+		2DAD10602804EDEB0000ECC3 /* GameDetails */ = {
+			isa = PBXGroup;
+			children = (
+				2DAD10642804EFAF0000ECC3 /* ViewModel */,
+				2DAD10612804EDF20000ECC3 /* View */,
+			);
+			path = GameDetails;
+			sourceTree = "<group>";
+		};
+		2DAD10612804EDF20000ECC3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2DAD106A28051FDF0000ECC3 /* CustomView */,
+				2DAD10622804EF4B0000ECC3 /* GameDetailsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2DAD10642804EFAF0000ECC3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2DAD10682804FD1E0000ECC3 /* GameDetailsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2DAD106A28051FDF0000ECC3 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				2DAD106B28051FEF0000ECC3 /* ButtonView.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -317,13 +369,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D343F6B2804893500772908 /* WebService.swift in Sources */,
+				2DAD10692804FD1E0000ECC3 /* GameDetailsViewModel.swift in Sources */,
 				2D343F4328046F6400772908 /* Constants.swift in Sources */,
+				2DAD105F2804EA7B0000ECC3 /* MainTabBarController.swift in Sources */,
 				2D343F4028046EA900772908 /* GameViewModel.swift in Sources */,
 				2DFA17392804D3EA004D57A8 /* GameResources.swift in Sources */,
 				2D343F6D2804B3DC00772908 /* State.swift in Sources */,
 				2D343F7A2804B9CE00772908 /* UIViewController + Ext.swift in Sources */,
 				2D343F4628046FE800772908 /* GameTableCell.swift in Sources */,
 				2D343F1C28046A2700772908 /* AppDelegate.swift in Sources */,
+				2DAD10632804EF4B0000ECC3 /* GameDetailsViewController.swift in Sources */,
 				2D343F702804B41D00772908 /* Game.swift in Sources */,
 				2DFA173B2804DEA9004D57A8 /* UIImageView+Ext.swift in Sources */,
 				2DFA17372804D353004D57A8 /* URLManger.swift in Sources */,
@@ -333,6 +388,7 @@
 				2D343F3E28046E9100772908 /* GamesListViewModel.swift in Sources */,
 				2D343F7C2804BA7F00772908 /* GameListWebService.swift in Sources */,
 				2D343F3628046B8E00772908 /* GamesListTableViewController.swift in Sources */,
+				2DAD106C28051FEF0000ECC3 /* ButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

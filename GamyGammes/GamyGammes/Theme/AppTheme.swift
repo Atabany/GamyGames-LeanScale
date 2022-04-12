@@ -50,6 +50,23 @@ struct AppTheme {
         }
     }
     
+    
+    var tabBarTintColor : UIColor   {
+        switch theme {
+        case .standard:
+            return UIColor(red: 0.063, green: 0.392, blue: 0.737, alpha: 1)
+        }
+    }
+    
+    var tabBarBackgroundColor : UIColor   {
+        switch theme {
+        case .standard:
+            return UIColor(red: 0.973, green: 0.973, blue: 0.973, alpha: 0.92)
+        }
+    }
+
+
+    
 }
 
 

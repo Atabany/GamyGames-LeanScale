@@ -146,8 +146,6 @@ extension GameTableCell {
         ratingValueLabel.attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.kern: 0.38])
         ratingValueLabel.textColor = UIColor(red: 216, green: 0, blue: 0, alpha: 1)
         ratingValueLabel.font    = UIFont(name: "SFProDisplay-Bold", size: 18)
-        
-        
     }
     
     private func styleGenreLabel() {
