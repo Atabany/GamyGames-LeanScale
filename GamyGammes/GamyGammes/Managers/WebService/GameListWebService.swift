@@ -8,9 +8,9 @@
 import Foundation
 
 struct GamesListWebService:  GamesListServiceProtcol {
-    func loadData(page: Int, completion: @escaping (Result<[Game], NetworkError>) -> ()) {
+    func loadData(page: Int, completion: @escaping (Result<[Game], Error>) -> ()) {
         guard let resource = GameResources.gamesListResoruce(page: page) else {
-            completion(.failure(.invalidURL))
+            completion(.failure(NetworkError.invalidURL))
             return
         }
         
@@ -35,8 +35,6 @@ struct GamesDetailsWebService:  GameDetailsApiServiceProtocol {
             completion(.failure(.invalidURL))
             return
         }
-        print(id)
-        print(resource.url)
         NetworkManager.shared.load(resource: resource) { result in
             switch result {
             case .success(let gameDetails):

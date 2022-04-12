@@ -161,13 +161,9 @@ class GamesListTableViewController: UIViewController {
                 self.navigationController?.pushViewController(detailsViewController, animated: true)
             }
         }
-
         
         viewModel.initFetch()
-        
     }
-    
-    
         
 }
 

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol GamesListServiceProtcol {
-    func loadData(page: Int, completion: @escaping (Result<[Game], NetworkError>)->())
+    func loadData(page: Int, completion: @escaping (Result<[Game], Error>)->())
 }
 
 
@@ -74,7 +74,7 @@ class GamesListViewModel {
                 self.state = .populated
             case .failure(let error):
                 self.state = .error
-                self.alertMessage = error.rawValue
+                self.alertMessage = error.localizedDescription
 
             }
         }

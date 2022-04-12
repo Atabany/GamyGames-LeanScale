@@ -13,12 +13,15 @@ enum PersistenceActionType {
 
 
 enum PersistenceError: String, Error {
-    case unableToFavorite       = "Unable to favoriting the follower"
-    case alreadyInFavorites     = "You've already favorited this user. you must REALY like them!"
+    case unableToFavorite       = "Unable to favoriting the game"
+    case alreadyInFavorites     = "You've already favorited this game."
     
 }
 
 enum PersistenceManager {
+    
+
+    
     static private let  defaults = UserDefaults.standard
     
     enum keys {
@@ -72,8 +75,8 @@ enum PersistenceManager {
         }
         do {
             let decoder                     =  JSONDecoder()
-            let favFollowers                =  try decoder.decode([Game].self, from: favoritesData)
-            completed(.success(favFollowers))
+            let favGames                    =  try decoder.decode([Game].self, from: favoritesData)
+            completed(.success(favGames))
             return
         } catch {
             completed(.failure(.unableToFavorite))
@@ -96,3 +99,18 @@ enum PersistenceManager {
     
 }
 
+
+
+struct FavoritesGamesListService: GamesListServiceProtcol {
+    func loadData(page: Int, completion: @escaping (Result<[Game], Error>) -> ()) {
+        PersistenceManager.retrieveFavorites { result in
+            switch result {
+            case .success(let favorites):
+                completion(.success(favorites))
+            case .failure(let error):
+                completion(.failure(error))
+
+            }
+        }
+    }
+}

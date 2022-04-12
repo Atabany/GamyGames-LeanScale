@@ -106,7 +106,6 @@
 				2D343F6E2804B41900772908 /* Model */,
 				2D343F4E2804727800772908 /* Theme */,
 				2D343F4B2804718000772908 /* Extensions */,
-				2D343F472804700500772908 /* CustomViews */,
 				2D343F4128046F5D00772908 /* Utils */,
 				2D343F3A28046BB800772908 /* Support */,
 				2D343F2F28046B5800772908 /* Modules */,
@@ -194,21 +193,6 @@
 				2D343F4528046FE800772908 /* GameTableCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		2D343F472804700500772908 /* CustomViews */ = {
-			isa = PBXGroup;
-			children = (
-				2D343F482804700900772908 /* ImageViews */,
-			);
-			path = CustomViews;
-			sourceTree = "<group>";
-		};
-		2D343F482804700900772908 /* ImageViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ImageViews;
 			sourceTree = "<group>";
 		};
 		2D343F4B2804718000772908 /* Extensions */ = {

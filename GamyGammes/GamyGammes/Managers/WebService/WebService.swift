@@ -23,7 +23,7 @@ enum NetworkError: String, Error {
     case invalidResponse        = "Invalid Response from the server please try again."
     case invalidData            = "The data received from the server is invalid, please try again."
     case requestNotCompleted    = "Request not completed please try again"
-
+    
     
 }
 
