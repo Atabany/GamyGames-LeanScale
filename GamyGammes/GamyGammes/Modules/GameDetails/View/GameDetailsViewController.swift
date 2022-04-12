@@ -20,11 +20,18 @@ class GameDetailsViewController: UIViewController {
     var redditButton = ButtonView(title: "Visit reddit", hasBottomDivider: false)
     var websiteButton = ButtonView(title: "Visit website", hasBottomDivider: true)
     
+    var activityIndicator = UIActivityIndicatorView()
+    
     
     var padding: CGFloat = 16
     
     
     var descriptionAttributedText: NSAttributedString?
+    
+    var viewModel: GameDetailsViewModel!
+    
+    
+    
     
     
     override func viewDidLoad() {
@@ -36,12 +43,11 @@ class GameDetailsViewController: UIViewController {
     
     
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
     }
-
+    
     
 }
 
@@ -49,13 +55,85 @@ class GameDetailsViewController: UIViewController {
 extension GameDetailsViewController {
     private func setup() {
         configureNavBar()
+        initVM()
     }
     
     func configureNavBar() {
         let favoriteButton = UIBarButtonItem(title: "Favourite", style: .plain, target: self, action: #selector(favoriteButtonAction(_:)))
         navigationItem.rightBarButtonItem = favoriteButton
     }
+    
+}
+extension GameDetailsViewController {
+    
+    func initVM() {
+        // Naive binding
+        viewModel.showAlertClosure = { [weak self] () in
+            DispatchQueue.main.async {
+                if let message = self?.viewModel.alertMessage {
+                    self?.showAlert( message )
+                }
+            }
+        }
+        
+        
+        viewModel.updateLoadingStatus = { [weak self] () in
+            guard let self = self else {
+                return
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                switch self.viewModel.state {
+                case .empty, .error:
+                    self.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.scrollView.alpha = 0.0
+                    })
+                case .loading:
+                    self.activityIndicator.startAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.scrollView.alpha = 0.0
+                    })
+                case .populated:
+                    self.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.scrollView.alpha = 1.0
+                    })
+                }
+            }
+        }
 
+
+        viewModel.showDetails = { [weak self] () in
+            guard let self = self else {return}
+            self.updateUI()
+        }
+        
+        
+        viewModel.openReddit = { [weak self] in
+            guard let self = self else {return}
+            guard let url = URL(string: self.viewModel.redditURL) else {
+                return
+            }
+            self.presentSafariVC(with: url)
+        }
+        
+        
+        viewModel.openWebsite = { [weak self] in
+            guard let self = self else {return}
+            guard let url = URL(string: self.viewModel.website) else {
+                return
+            }
+            self.presentSafariVC(with: url)
+        }
+        
+        
+        viewModel.initFetch()
+    }
+    
 }
 
 extension GameDetailsViewController {
@@ -69,6 +147,12 @@ extension GameDetailsViewController {
     }
     
     
+    private func styleActivityIndicator() {
+        if #available(iOS 13.0, *) {
+            activityIndicator =  UIActivityIndicatorView(style: .large)
+        }
+    }
+    
     private func styleTitleLabel() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font  = UIFont(name: "SFProDisplay-Bold", size: 36)
@@ -77,25 +161,25 @@ extension GameDetailsViewController {
         titleLabel.textAlignment = .center
     }
     
-
+    
     private func styleBackgroundImage() {
         backgroundImage.translatesAutoresizingMaskIntoConstraints = false
         backgroundImage.contentMode = .scaleAspectFill
         backgroundImage.clipsToBounds = true
         backgroundImage.image = Constants.Images.logo
-
+        
     }
-
+    
     private func styleDescriptionKeyLabel() {
         keyGameDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         keyGameDescriptionLabel.font  = UIFont(name: "SFProText-Regular", size: 17)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.08
         keyGameDescriptionLabel.attributedText = NSMutableAttributedString(string: "Game Description", attributes: [NSAttributedString.Key.kern: -0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
-
-
+        
+        
     }
-
+    
     
     
     private func styleDescriptionValueLabel() {
@@ -106,7 +190,7 @@ extension GameDetailsViewController {
         valueGameDescriptionLabel.numberOfLines = 4
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.84
-        descriptionAttributedText = NSMutableAttributedString(string: "Rockstar Games went bigger, since their previous installment of the series. You get the complicated and realistic world-building from Liberty City of GTA4 in the setting of lively and diverse Los Santos, from an old fan favorite GTA San Andreas. 561 different vehicles (including every transport you can operate)....", attributes: [NSAttributedString.Key.kern: -0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        descriptionAttributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.kern: -0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         
         valueGameDescriptionLabel.attributedText = descriptionAttributedText
         
@@ -121,7 +205,7 @@ extension GameDetailsViewController {
         buttonsStackView.alignment = .leading
         buttonsStackView.distribution = .fill
     }
-
+    
     
     
 }
@@ -135,6 +219,7 @@ extension GameDetailsViewController {
         layoutKeyDescriptionLabel()
         layoutValueDescriptionLabel()
         layoutButtons()
+        layoutActivityIndicator()
     }
     private func layoutScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -147,7 +232,7 @@ extension GameDetailsViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-
+    
     
     private func layoutBackgroundImage() {
         scrollView.addSubview(backgroundImage)
@@ -169,7 +254,7 @@ extension GameDetailsViewController {
             titleLabel.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -padding),
         ])
     }
-
+    
     private func layoutKeyDescriptionLabel() {
         scrollView.addSubview(keyGameDescriptionLabel)
         NSLayoutConstraint.activate([
@@ -187,7 +272,7 @@ extension GameDetailsViewController {
             valueGameDescriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             valueGameDescriptionLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
             valueGameDescriptionLabel.topAnchor.constraint(equalTo: keyGameDescriptionLabel.bottomAnchor, constant: padding),
-
+            
         ])
     }
     
@@ -207,6 +292,18 @@ extension GameDetailsViewController {
         ])
     }
     
+    
+    private func layoutActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    
+    
 }
 
 
@@ -218,3 +315,14 @@ extension GameDetailsViewController {
     }
 }
 
+
+extension GameDetailsViewController {
+    
+    func updateUI() {
+        DispatchQueue.main.async {
+            self.titleLabel.text = self.viewModel.titleText
+            self.valueGameDescriptionLabel.text = self.viewModel.description
+            self.backgroundImage.setImage(from: self.viewModel.backgroundImageURL)
+        }
+    }
+}

@@ -14,18 +14,24 @@ protocol GameDetailsApiServiceProtocol {
 
 class GameDetailsViewModel {
     
-    var service: GameDetailsApiServiceProtocol
-    var gameId: Int
-    var gameDetails: GameDetails?
+
+    private var gameId: Int
+    private var gameDetails: GameDetails? {
+        didSet {
+            showDetails?()
+        }
+    }
     
     
-    fileprivate var apiService: GameDetailsApiServiceProtocol!
+    private var apiService: GameDetailsApiServiceProtocol!
 
     
     var showDetails: (()->())?
     var showAlertClosure: (()->())?
     var updateLoadingStatus: (()->())?
-    
+    var openWebsite: (()->())?
+    var openReddit: (()->())?
+
     
     
 
@@ -46,13 +52,13 @@ class GameDetailsViewModel {
     
     
     init(service: GameDetailsApiServiceProtocol, gameId: Int) {
-        self.service = service
+        self.apiService = service
         self.gameId = gameId
     }
     
     func initFetch() {
         state = .loading
-        apiService.loadData(id: 1) { [weak self] result in
+        apiService.loadData(id: gameId) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let gameDetails):
@@ -77,37 +83,25 @@ class GameDetailsViewModel {
     }
     
     var description: String {
-        // FIX: - Description
-        return gameDetails?.name ?? ""
+        return (gameDetails?.gameDescription ?? "").html2String
     }
     
     
     var redditURL: String {
-        return gameDetails?.name ?? ""
-
-//        return gameDetails.redditURL ?? ""
+        return gameDetails?.redditURL ?? ""
     }
     
     var website: String {
-        return gameDetails?.name ?? ""
-
-//        return gameDetails.websiteURL ?? ""
+        return gameDetails?.website ?? ""
     }
     
     func pressReddit() {
-    
-//            guard let url = URL(string: ) else {
-//                return
-//            }
-//            presentSafariVC(with: url)
-//        }
-
+        self.openReddit?()
     }
     
     
     func pressVisitWebsite() {
-        
-        
+        self.openWebsite?()
     }
     
     

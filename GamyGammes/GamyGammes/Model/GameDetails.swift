@@ -8,14 +8,22 @@
 import Foundation
 
 struct GameDetails: Codable {
-        let id: Int?
-        let name: String?
-        let backgroundImage: String?
-        let metacritic: Int?
-        let genres: [Genre]?
+    let id: Int?
+    let redditURL: String?
+    let website: String?
+    let name: String?
+    let gameDescription: String?
+    let backgroundImage: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case backgroundImage = "background_image"
+        case gameDescription = "description"
+        case name, id, website
+        case redditURL = "reddit_url"
+        
+    }
 
-        enum CodingKeys: String, CodingKey {
-            case backgroundImage = "background_image"
-            case id, name, metacritic, genres
-        }
 }
+
+
+

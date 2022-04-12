@@ -123,6 +123,7 @@ extension GamesListViewModel {
         guard indexPath.row < gameViewModels.count else {
             return
         }
+        selectedGame = gameViewModels[indexPath.row].game
         self.showDetails?()
     }
 }

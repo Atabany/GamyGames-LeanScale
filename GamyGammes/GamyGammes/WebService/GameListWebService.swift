@@ -14,7 +14,6 @@ struct GamesListWebService:  GamesListServiceProtcol {
             return
         }
         
-        print(resource.url)
         NetworkManager.shared.load(resource: resource) { result in
             switch result {
             case .success(let gamesResponse):
@@ -25,6 +24,30 @@ struct GamesListWebService:  GamesListServiceProtcol {
             }
         }
     }
+}
+
+
+
+
+struct GamesDetailsWebService:  GameDetailsApiServiceProtocol {
+    func loadData(id: Int, completion: @escaping (Result<GameDetails, NetworkError>) -> ()) {
+        guard let resource = GameResources.gamesDetailsResoruce(id: id) else {
+            completion(.failure(.invalidURL))
+            return
+        }
+        print(id)
+        print(resource.url)
+        NetworkManager.shared.load(resource: resource) { result in
+            switch result {
+            case .success(let gameDetails):
+                completion(.success(gameDetails))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+
+    }
+    
 }
 
 
