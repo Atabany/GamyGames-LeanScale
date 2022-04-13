@@ -110,7 +110,7 @@ extension GamesListViewModel {
     
     
     func loadData(page: Int, loadMore: Bool) {
-        apiService.loadData(page: 1, search: searchText) { [weak self] result in
+        apiService.loadData(page: page, search: searchText) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success((let games, let next)):
@@ -228,6 +228,8 @@ extension GamesListViewModel {
     
     func search(filter: String) {
         guard filter.count > 3 else {return}
+        self.page = 1
+        self.next = nil
         self.searchText = filter
         self.initFetch()
     }

@@ -39,6 +39,7 @@ class NetworkManager {
     
     func load<T>(resource: Resource<T>, completion: @escaping (Result<T, NetworkError>) -> Void) {
         var request = URLRequest(url: resource.url)
+        print(resource.url)
         request.httpMethod = resource.method.rawValue
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         URLSession.shared.dataTask(with: request) { data, response, error in
